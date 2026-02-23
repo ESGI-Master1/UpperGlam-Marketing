@@ -1,0 +1,19 @@
+:root {
+  --ug-bg: #ffffff;
+  --ug-bg-light: #ffffff;
+  --ug-surface: #f8f8f7;
+  --ug-surface-soft: #f2f2f1;
+  --ug-text: #121212;
+  --ug-text-dark: #121212;
+  --ug-muted: #5f5f5f;
+  --ug-border: rgba(16, 16, 16, 0.14);
+  --ug-card-bg: rgba(255, 255, 255, 0.9);
+  --ug-header-bg: rgba(255, 255, 255, 0.88);
+  --ug-footer-bg: #f8f8f7;
+  --ug-banner-bg: rgba(248, 248, 247, 0.98);
+  --ug-input-bg: rgba(255, 255, 255, 0.95);
+  --ug-accent: #d6b36a;
+  --ug-accent-hover: #e2c27d;
+  --ug-container: 1120px;
+  --ug-radius: 16px;
+}
