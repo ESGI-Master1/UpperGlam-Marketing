@@ -131,7 +131,9 @@ export function PreSignupClientPage() {
                 label="Commentaire"
                 maxLength={500}
                 name="comment"
-                onChange={(event) => setCommentLength(event.target.value.length)}
+                onChange={(event) =>
+                  setCommentLength(event.target.value.length)
+                }
                 placeholder="Ajoutez un commentaire (optionnel)"
               />
               <p className="text-right text-xs text-[var(--ug-muted)]">

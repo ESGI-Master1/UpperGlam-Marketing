@@ -28,7 +28,11 @@ export function Header() {
             }
             to="/"
           >
-            <img alt="Upper Glam" className="h-16 w-16 object-contain" src="/logo.png" />
+            <img
+              alt="Upper Glam"
+              className="h-16 w-16 object-contain"
+              src="/logo.png"
+            />
           </NavLink>
           <nav className="flex flex-wrap gap-x-2 gap-y-2 text-[15px] text-[var(--ug-muted)]">
             {navItems.map((item) => (

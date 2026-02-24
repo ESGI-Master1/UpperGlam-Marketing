@@ -132,7 +132,9 @@ export function PreSignupProPage() {
                 label="Presentation courte"
                 maxLength={500}
                 name="comment"
-                onChange={(event) => setCommentLength(event.target.value.length)}
+                onChange={(event) =>
+                  setCommentLength(event.target.value.length)
+                }
                 placeholder="Parlez de votre activite..."
               />
               <p className="text-right text-xs text-[var(--ug-muted)]">

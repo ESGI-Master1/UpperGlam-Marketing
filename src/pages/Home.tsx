@@ -22,7 +22,7 @@ export function Home() {
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 space-y-6 lg:col-span-7">
             <Badge>{homeCopy.hero.eyebrow}</Badge>
-            <h1 className="text-4xl mb-4 leading-tight font-semibold sm:text-5xl">
+            <h1 className="mb-4 text-4xl leading-tight font-semibold sm:text-5xl">
               {homeCopy.hero.title}
             </h1>
             <p className="max-w-2xl text-base leading-relaxed text-[var(--ug-muted)] sm:text-lg">

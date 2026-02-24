@@ -10,7 +10,7 @@ export const homeCopy = {
     eyebrow: 'Nouvelle experience beaute',
     title: "Parce que la beaute n'attend pas.",
     description:
-      'Plus besoin de planifier des semaines a l\'avance. En 3 clics, tu accedes aux meilleur(e)s expert(e)s disponibles autour de toi.',
+      "Plus besoin de planifier des semaines a l'avance. En 3 clics, tu accedes aux meilleur(e)s expert(e)s disponibles autour de toi.",
     description2:
       'La plateforme qui va revolutionner la beaute en connectant des professionnel(le)s a leurs futur(e)s client(e)s.',
     description3:
