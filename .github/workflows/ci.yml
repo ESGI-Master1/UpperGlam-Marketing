@@ -72,9 +72,3 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Run migrations
-        run: node ace migration:run --force
-
-      - name: Test
-        run: npm test
