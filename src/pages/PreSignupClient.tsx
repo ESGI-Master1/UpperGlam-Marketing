@@ -76,106 +76,119 @@ export function PreSignupClientPage() {
               <h1 className="text-4xl sm:text-5xl">
                 Rejoignez la liste d attente Client(e)
               </h1>
-              <p className="text-sm leading-relaxed text-[var(--ug-muted)]">
-                Laissez vos informations pour etre informe(e) de l'ouverture
-                complete du service.
-              </p>
+              {!submitted && (
+                <p className="text-sm leading-relaxed text-(--ug-muted)">
+                  Laissez vos informations pour etre informe(e) de l'ouverture
+                  complete du service.
+                </p>
+              )}
             </div>
-            <form className="space-y-4" onSubmit={onSubmit}>
-              <Input
-                label="Nom d utilisateur"
-                name="username"
-                placeholder="Votre nom"
-                required
-              />
-              <Input
-                label="Email"
-                name="email"
-                placeholder="vous@exemple.com"
-                required
-                type="email"
-              />
-              <Input
-                label="Mot de passe"
-                minLength={8}
-                name="password"
-                placeholder="Minimum 8 caracteres"
-                required
-                type="password"
-              />
-              <Input
-                label="Ville"
-                name="city"
-                placeholder="Votre ville"
-                required
-              />
-              <Input
-                label="Numero de telephone"
-                name="phone"
-                placeholder="06 00 00 00 00"
-                required
-                type="tel"
-              />
-              <Input
-                label="Code postal"
-                name="zipcode"
-                placeholder="75000"
-                required
-              />
-              <Textarea
-                label="Besoin principal"
-                name="interest"
-                placeholder="Ex: maquillage evenementiel, coiffure..."
-              />
-              <Textarea
-                label="Commentaire"
-                maxLength={500}
-                name="comment"
-                onChange={(event) =>
-                  setCommentLength(event.target.value.length)
-                }
-                placeholder="Ajoutez un commentaire (optionnel)"
-              />
-              <p className="text-right text-xs text-[var(--ug-muted)]">
-                {commentLength}/500
-              </p>
-              <label className="flex items-start gap-3 rounded-xl border border-[var(--ug-border)] bg-[var(--ug-surface)] p-3 text-sm text-[var(--ug-muted)]">
-                <input
-                  className="mt-1"
-                  name="consent"
+            {!submitted ? (
+              <form className="space-y-4" onSubmit={onSubmit}>
+                <Input
+                  label="Nom d utilisateur"
+                  name="username"
+                  placeholder="Votre nom"
                   required
-                  type="checkbox"
                 />
-                <span className="leading-relaxed">
-                  <strong>
-                    J accepte que mes donnees personnelles soient collectees et
-                    traitees par Upper Glam conformement a sa Politique de
-                    Confidentialite.
-                  </strong>{' '}
-                  Les informations recueillies via ce formulaire sont
-                  enregistrees par Upper Glam afin de fournir nos services,
-                  faciliter la mise en relation et ameliorer votre experience.
-                  Vous pouvez exercer vos droits d acces, de rectification, d
-                  opposition ou de suppression en nous contactant a
-                  contact.upperglam@gmail.com. Consultez notre{' '}
-                  <Link
-                    className="text-[var(--ug-accent)] underline"
-                    to="/privacy"
-                  >
-                    Politique de Confidentialite
-                  </Link>
-                  .
-                </span>
-              </label>
-              <Button disabled={isLoading} size="lg" type="submit">
-                {isLoading ? 'Envoi en cours...' : 'Je me pre-inscris'}
-              </Button>
-            </form>
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            {submitted && (
-              <p className="text-sm text-[var(--ug-accent)]">
-                Merci, votre pre-inscription client a bien ete prise en compte.
-              </p>
+                <Input
+                  label="Email"
+                  name="email"
+                  placeholder="vous@exemple.com"
+                  required
+                  type="email"
+                />
+                <Input
+                  label="Mot de passe"
+                  minLength={8}
+                  name="password"
+                  placeholder="Minimum 8 caracteres"
+                  required
+                  type="password"
+                />
+                <Input
+                  label="Ville"
+                  name="city"
+                  placeholder="Votre ville"
+                  required
+                />
+                <Input
+                  label="Numero de telephone"
+                  name="phone"
+                  placeholder="06 00 00 00 00"
+                  required
+                  type="tel"
+                />
+                <Input
+                  label="Code postal"
+                  name="zipcode"
+                  placeholder="75000"
+                  required
+                />
+                <Textarea
+                  label="Besoin principal"
+                  name="interest"
+                  placeholder="Ex: maquillage evenementiel, coiffure..."
+                />
+                <Textarea
+                  label="Commentaire"
+                  maxLength={500}
+                  name="comment"
+                  onChange={(event) =>
+                    setCommentLength(event.target.value.length)
+                  }
+                  placeholder="Ajoutez un commentaire (optionnel)"
+                />
+                <p className="text-right text-xs text-(--ug-muted)">
+                  {commentLength}/500
+                </p>
+                <label className="flex items-start gap-3 rounded-xl border border-(--ug-border) bg-(--ug-surface) p-3 text-sm text-(--ug-muted)">
+                  <input
+                    className="mt-1"
+                    name="consent"
+                    required
+                    type="checkbox"
+                  />
+                  <span className="leading-relaxed">
+                    <strong>
+                      J accepte que mes donnees personnelles soient collectees
+                      et traitees par Upper Glam conformement a sa Politique de
+                      Confidentialite.
+                    </strong>{' '}
+                    Les informations recueillies via ce formulaire sont
+                    enregistrees par Upper Glam afin de fournir nos services,
+                    faciliter la mise en relation et ameliorer votre experience.
+                    Vous pouvez exercer vos droits d acces, de rectification, d
+                    opposition ou de suppression en nous contactant a
+                    contact.upperglam@gmail.com. Consultez notre{' '}
+                    <Link
+                      className="text-(--ug-accent) underline"
+                      to="/privacy"
+                    >
+                      Politique de Confidentialite
+                    </Link>
+                    .
+                  </span>
+                </label>
+                <Button disabled={isLoading} size="lg" type="submit">
+                  {isLoading ? 'Envoi en cours...' : 'Je me pre-inscris'}
+                </Button>
+                {error && <p className="text-sm text-red-600">{error}</p>}
+              </form>
+            ) : (
+              <div className="space-y-4 rounded-xl border border-(--ug-accent) bg-(--ug-accent)/5 p-6 text-center">
+                <p className="text-lg font-medium text-(--ug-accent)">
+                  Merci, votre pre-inscription client a bien ete prise en
+                  compte.
+                </p>
+                <p className="text-sm text-(--ug-muted)">
+                  Nous vous tiendrons informe(e) par e-mail de l'ouverture du
+                  service.
+                </p>
+                <Button className="mt-4" variant="secondary">
+                  <Link to="/">Retour a l'accueil</Link>
+                </Button>
+              </div>
             )}
           </Card>
         </div>
