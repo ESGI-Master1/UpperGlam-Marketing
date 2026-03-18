@@ -24,7 +24,7 @@ export function Footer() {
           </div>
           <div className="grid grid-cols-1 gap-6 text-sm text-[var(--ug-muted)] sm:grid-cols-2">
             <div className="space-y-2">
-              <p className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--ug-text)]">
+              <p className="text-xs font-semibold tracking-[0.1em] text-[var(--ug-text)] uppercase">
                 Liens
               </p>
               {footerLinks.map((item) => (
@@ -48,7 +48,7 @@ export function Footer() {
               ))}
             </div>
             <div className="space-y-2">
-              <p className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--ug-text)]">
+              <p className="text-xs font-semibold tracking-[0.1em] text-[var(--ug-text)] uppercase">
                 Reseaux
               </p>
               <a
