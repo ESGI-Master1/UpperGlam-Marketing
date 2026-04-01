@@ -25,7 +25,8 @@ jobs:
       image: node:22-bullseye
 
     env:
-      NODE_ENV: production
+      NODE_ENV: test
+      HUSKY: 0
 
     steps:
       - name: Checkout
