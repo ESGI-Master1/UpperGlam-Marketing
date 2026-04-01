@@ -56,10 +56,10 @@ export function ClientPage() {
                 trackEvent('cta_click', {
                   cta: 'client_signup',
                   location: 'client_page',
-                  to: '/pre-inscription/client',
+                  to: '/pre-inscription',
                 })
               }
-              to="/pre-inscription/client"
+              to="/pre-inscription"
             >
               Je me pre-inscris
             </Link>

@@ -1,0 +1,75 @@
+import { useState } from 'react'
+import { PageMeta } from '../components/common/PageMeta'
+import { PreSignupForm } from '../components/pre-signup/PreSignupForm'
+import { Button } from '../components/ui/Button'
+import { Card } from '../components/ui/Card'
+import { Section } from '../components/ui/Section'
+import { trackEvent } from '../lib/analytics'
+
+type PreSignupRole = 'provider' | 'user'
+
+const roleConfig = {
+  provider: {
+    ctaLabel: 'Je me pre-inscris en tant que pro',
+    intro: 'Decrivez votre activite pour etre prioritaire au lancement.',
+    title: 'Rejoignez la liste d attente Pro',
+    trackingFormName: 'pre_signup_pro' as const,
+  },
+  user: {
+    ctaLabel: 'Je me pre-inscris',
+    intro: 'Laissez vos informations pour etre informe(e) du lancement.',
+    title: 'Rejoignez la liste d attente Client(e)',
+    trackingFormName: 'pre_signup_client' as const,
+  },
+}
+
+export function PreSignupPage() {
+  const [role, setRole] = useState<PreSignupRole | null>(null)
+
+  const selectRole = (nextRole: PreSignupRole) => {
+    setRole(nextRole)
+    trackEvent('pre_signup_role_selected', { role: nextRole })
+  }
+
+  return (
+    <>
+      <PageMeta
+        description="Pré-inscription Upper Glam pour client(e)s et professionnel(le)s."
+        title="Pre-inscription"
+      />
+      <Section>
+        <div className="mx-auto max-w-3xl space-y-4">
+          <Card className="space-y-4">
+            <h1 className="text-3xl sm:text-4xl">
+              Vous etes pro ou particulier ?
+            </h1>
+            <p className="text-sm text-[var(--ug-muted)]">
+              Commencez par choisir votre profil pour afficher le formulaire
+              adapte.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Button
+                className="w-full"
+                onClick={() => selectRole('user')}
+                type="button"
+                variant={role === 'user' ? 'primary' : 'secondary'}
+              >
+                Je suis particulier(e)
+              </Button>
+              <Button
+                className="w-full"
+                onClick={() => selectRole('provider')}
+                type="button"
+                variant={role === 'provider' ? 'primary' : 'secondary'}
+              >
+                Je suis pro
+              </Button>
+            </div>
+          </Card>
+
+          {role && <PreSignupForm role={role} {...roleConfig[role]} />}
+        </div>
+      </Section>
+    </>
+  )
+}

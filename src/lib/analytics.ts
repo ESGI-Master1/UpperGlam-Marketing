@@ -18,6 +18,7 @@ export type AnalyticsEventName =
   | 'nav_click'
   | 'outbound_click'
   | 'page_view'
+  | 'pre_signup_role_selected'
 
 export function trackEvent(
   event: AnalyticsEventName,

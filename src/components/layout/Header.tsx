@@ -8,8 +8,12 @@ const navItems = [
   { label: 'Client & Pro', match: ['/client', '/pro'], to: '/client' },
   {
     label: 'Pre-inscription',
-    match: ['/pre-inscription/client', '/pre-inscription/pro'],
-    to: '/pre-inscription/client',
+    match: [
+      '/pre-inscription',
+      '/pre-inscription/client',
+      '/pre-inscription/pro',
+    ],
+    to: '/pre-inscription',
   },
   { label: 'A propos', to: '/about' },
 ]

@@ -56,10 +56,10 @@ export function ProPage() {
                 trackEvent('cta_click', {
                   cta: 'pro_signup',
                   location: 'pro_page',
-                  to: '/pre-inscription/pro',
+                  to: '/pre-inscription',
                 })
               }
-              to="/pre-inscription/pro"
+              to="/pre-inscription"
             >
               Je me pre-inscris en tant que pro
             </Link>

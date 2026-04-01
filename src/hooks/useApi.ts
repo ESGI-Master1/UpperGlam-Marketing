@@ -7,7 +7,13 @@ import {
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL.replace(/\/+$/, '')
 
 type ApiErrorPayload = {
-  error?: string
+  error?:
+    | {
+        code?: string
+        details?: unknown
+        message?: string
+      }
+    | string
   message?: string
 }
 
@@ -59,12 +65,15 @@ export function useApi() {
         }
 
         if (!response.ok) {
-          const resolvedMessage = getApiErrorMessage(
-            (data as ApiErrorPayload | null)?.error,
-            options?.locale
-          )
+          const rawError = (data as ApiErrorPayload | null)?.error
+          const errorCode =
+            typeof rawError === 'string' ? rawError : rawError?.code
+          const errorMessage =
+            typeof rawError === 'string' ? undefined : rawError?.message
+          const resolvedMessage = getApiErrorMessage(errorCode, options?.locale)
           const message =
             resolvedMessage ??
+            errorMessage ??
             (data as ApiErrorPayload | null)?.message ??
             'Une erreur est survenue lors de la requete.'
           throw new Error(message)
