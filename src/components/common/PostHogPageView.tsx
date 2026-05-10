@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import posthog from 'posthog-js'
 import { useLocation, useNavigationType } from 'react-router-dom'
-import { trackEvent } from '../../lib/analytics'
+import { trackPageView } from '../../lib/analytics'
 
 export function PostHogPageView() {
   const location = useLocation()
@@ -15,8 +14,7 @@ export function PostHogPageView() {
       url: window.location.href,
     }
 
-    posthog.capture('$pageview', pageViewProperties)
-    trackEvent('page_view', pageViewProperties)
+    trackPageView(pageViewProperties)
   }, [location.pathname, location.search, navigationType])
 
   return null
