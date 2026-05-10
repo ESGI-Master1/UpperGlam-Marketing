@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { siteCopy } from '../../content/copy'
-import { trackEvent } from '../../lib/analytics'
+import { openCookiePreferences, trackEvent } from '../../lib/analytics'
 import { Container } from './Container'
 
 const footerLinks = [
@@ -46,6 +46,20 @@ export function Footer() {
                   {item.label}
                 </Link>
               ))}
+              <button
+                className="block cursor-pointer text-left hover:text-[var(--ug-accent)]"
+                onClick={() => {
+                  openCookiePreferences()
+                  trackEvent('legal_link_click', {
+                    label: 'Gerer mes cookies',
+                    location: 'footer',
+                    to: 'cookie_preferences',
+                  })
+                }}
+                type="button"
+              >
+                Gerer mes cookies
+              </button>
             </div>
             <div className="space-y-2">
               <p className="text-xs font-semibold tracking-[0.1em] text-[var(--ug-text)] uppercase">
