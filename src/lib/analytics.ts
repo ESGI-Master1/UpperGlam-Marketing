@@ -9,6 +9,11 @@ export const posthogOptions: Partial<PostHogConfig> = {
   person_profiles: 'identified_only',
 }
 
+export const ANALYTICS_CONSENT_STORAGE_KEY = 'ug_cookie_consent'
+export const ANALYTICS_CONSENT_CHANGED_EVENT = 'ug-cookie-consent-changed'
+
+export type AnalyticsConsentStatus = 'accepted' | 'refused'
+
 export type AnalyticsEventName =
   | 'cookie_consent_updated'
   | 'cta_click'
@@ -20,9 +25,44 @@ export type AnalyticsEventName =
   | 'page_view'
   | 'pre_signup_role_selected'
 
+export function getAnalyticsConsentStatus(): AnalyticsConsentStatus | null {
+  if (typeof window === 'undefined') return null
+
+  const consent = window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY)
+  if (consent === 'accepted' || consent === 'refused') return consent
+
+  return null
+}
+
+export function hasAnalyticsConsent(): boolean {
+  return getAnalyticsConsentStatus() === 'accepted'
+}
+
+export function setAnalyticsConsentStatus(status: AnalyticsConsentStatus) {
+  if (typeof window === 'undefined') return
+
+  window.localStorage.setItem(ANALYTICS_CONSENT_STORAGE_KEY, status)
+  window.dispatchEvent(
+    new CustomEvent(ANALYTICS_CONSENT_CHANGED_EVENT, {
+      detail: { status },
+    })
+  )
+}
+
 export function trackEvent(
   event: AnalyticsEventName,
   properties?: Record<string, string | number | boolean | null | undefined>
 ) {
+  if (!hasAnalyticsConsent()) return
+
   posthog.capture(event, properties)
+}
+
+export function trackPageView(
+  properties: Record<string, string | number | boolean | null | undefined>
+) {
+  if (!hasAnalyticsConsent()) return
+
+  posthog.capture('$pageview', properties)
+  trackEvent('page_view', properties)
 }

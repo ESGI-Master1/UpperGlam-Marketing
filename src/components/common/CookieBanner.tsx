@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import { trackEvent } from '../../lib/analytics'
+import {
+  ANALYTICS_CONSENT_STORAGE_KEY,
+  setAnalyticsConsentStatus,
+  trackEvent,
+} from '../../lib/analytics'
 import { Button } from '../ui/Button'
 import { Container } from '../layout/Container'
 
-const STORAGE_KEY = 'ug_cookie_consent'
-
 export function CookieBanner() {
   const [visible, setVisible] = useState(() => {
-    const consent = window.localStorage.getItem(STORAGE_KEY)
+    const consent = window.localStorage.getItem(ANALYTICS_CONSENT_STORAGE_KEY)
     return !consent
   })
 
@@ -23,7 +25,7 @@ export function CookieBanner() {
         <div className="flex gap-2">
           <Button
             onClick={() => {
-              window.localStorage.setItem(STORAGE_KEY, 'accepted')
+              setAnalyticsConsentStatus('accepted')
               trackEvent('cookie_consent_updated', { status: 'accepted' })
               setVisible(false)
             }}
@@ -34,8 +36,7 @@ export function CookieBanner() {
           </Button>
           <Button
             onClick={() => {
-              window.localStorage.setItem(STORAGE_KEY, 'refused')
-              trackEvent('cookie_consent_updated', { status: 'refused' })
+              setAnalyticsConsentStatus('refused')
               setVisible(false)
             }}
             size="md"
