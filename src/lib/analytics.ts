@@ -11,6 +11,7 @@ export const posthogOptions: Partial<PostHogConfig> = {
 
 export const ANALYTICS_CONSENT_STORAGE_KEY = 'ug_cookie_consent'
 export const ANALYTICS_CONSENT_CHANGED_EVENT = 'ug-cookie-consent-changed'
+export const COOKIE_PREFERENCES_OPEN_EVENT = 'ug-cookie-preferences-open'
 
 export type AnalyticsConsentStatus = 'accepted' | 'refused'
 
@@ -47,6 +48,12 @@ export function setAnalyticsConsentStatus(status: AnalyticsConsentStatus) {
       detail: { status },
     })
   )
+}
+
+export function openCookiePreferences() {
+  if (typeof window === 'undefined') return
+
+  window.dispatchEvent(new Event(COOKIE_PREFERENCES_OPEN_EVENT))
 }
 
 export function trackEvent(
