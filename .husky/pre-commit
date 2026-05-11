@@ -1,1 +1,1 @@
-npm run workflow:check
+npm run precommit:staged

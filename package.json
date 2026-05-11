@@ -16,8 +16,16 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "workflow:check": "npm run format:check && npm run lint && npm run build",
+    "precommit:staged": "lint-staged",
     "workflow:fix": "npm run format && npm run lint:fix",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,css,scss,html,yml,yaml}": "prettier --write"
   },
   "dependencies": {
     "concurrently": "^9.2.1",
@@ -47,6 +55,7 @@
     "globals": "^17.3.0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.0",
