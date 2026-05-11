@@ -19,7 +19,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check dependency graph status
+        id: dependency-graph
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: repo } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            const status = repo.security_and_analysis?.dependency_graph?.status;
+            const enabled = status === 'enabled';
+
+            core.info(`Dependency graph status: ${status ?? 'unknown'}`);
+            core.setOutput('enabled', enabled ? 'true' : 'false');
+
       - name: Dependency review
+        if: steps.dependency-graph.outputs.enabled == 'true'
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: high
+
+      - name: Skip notice
+        if: steps.dependency-graph.outputs.enabled != 'true'
+        run: |
+          echo "::notice::Dependency graph is not enabled for this repository. Skipping dependency-review-action."
