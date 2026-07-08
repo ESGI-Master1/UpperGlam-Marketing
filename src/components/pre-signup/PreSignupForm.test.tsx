@@ -75,8 +75,11 @@ describe('PreSignupForm critical flow', () => {
     await waitFor(() => {
       expect(trackEventMock).toHaveBeenCalledWith('form_submit', {
         form_name: 'pre_signup_client',
+        funnel_name: 'pre_signup',
+        funnel_step: 'submit_success',
         marketing_opt_in: false,
         role: 'user',
+        source: 'marketing_website',
       })
     })
   })

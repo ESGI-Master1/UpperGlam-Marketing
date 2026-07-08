@@ -12,6 +12,7 @@ vi.mock('posthog-js', () => ({
 
 import {
   ANALYTICS_CONSENT_STORAGE_KEY,
+  getAnalyticsContextProperties,
   setAnalyticsConsentStatus,
   trackEvent,
   trackPageView,
@@ -46,6 +47,8 @@ describe('analytics consent gating', () => {
     })
 
     captureMock.mockReset()
+    window.sessionStorage.clear()
+    window.history.replaceState({}, '', '/')
   })
 
   it('scenario 1: does not send analytics without consent', () => {
@@ -116,5 +119,53 @@ describe('analytics consent gating', () => {
     }
 
     expect(filter?.(event)).toBeNull()
+  })
+
+  it('adds non-sensitive attribution context to accepted events', () => {
+    window.history.replaceState(
+      {},
+      '',
+      '/pre-inscription?utm_source=instagram&utm_medium=social&utm_campaign=launch'
+    )
+    setAnalyticsConsentStatus('accepted')
+
+    trackEvent('pre_signup_role_selected', {
+      funnel_name: 'pre_signup',
+      role: 'user',
+    })
+
+    expect(captureMock).toHaveBeenCalledWith(
+      'pre_signup_role_selected',
+      expect.objectContaining({
+        current_path: '/pre-inscription',
+        entry_path: '/pre-inscription',
+        funnel_name: 'pre_signup',
+        traffic_source: 'instagram',
+        utm_campaign: 'launch',
+        utm_medium: 'social',
+        utm_source: 'instagram',
+      })
+    )
+  })
+
+  it('keeps first-touch attribution during the same session', () => {
+    window.history.replaceState({}, '', '/?utm_source=tiktok')
+    expect(getAnalyticsContextProperties()).toEqual(
+      expect.objectContaining({
+        entry_path: '/',
+        traffic_source: 'tiktok',
+        utm_source: 'tiktok',
+      })
+    )
+
+    window.history.replaceState({}, '', '/pre-inscription')
+    expect(getAnalyticsContextProperties()).toEqual(
+      expect.objectContaining({
+        current_path: '/pre-inscription',
+        entry_path: '/',
+        traffic_source: 'tiktok',
+        utm_source: 'tiktok',
+      })
+    )
   })
 })

@@ -125,7 +125,10 @@ export function PreSignupForm({
 
     trackEvent('form_submit_attempt', {
       form_name: trackingFormName,
+      funnel_name: 'pre_signup',
+      funnel_step: 'submit_attempt',
       role,
+      source: 'marketing_website',
     })
 
     if (!firstName || !lastName) {
@@ -133,7 +136,10 @@ export function PreSignupForm({
         error_type: 'client_validation',
         field: 'identity',
         form_name: trackingFormName,
+        funnel_name: 'pre_signup',
+        funnel_step: 'submit_error',
         role,
+        source: 'marketing_website',
       })
       setLocalError('Le prenom et le nom sont obligatoires.')
       return
@@ -144,7 +150,10 @@ export function PreSignupForm({
         error_type: 'client_validation',
         field: 'provider_display_name',
         form_name: trackingFormName,
+        funnel_name: 'pre_signup',
+        funnel_step: 'submit_error',
         role,
+        source: 'marketing_website',
       })
       setLocalError('Le nom public est obligatoire pour un prestataire.')
       return
@@ -189,8 +198,11 @@ export function PreSignupForm({
       })
       trackEvent('form_submit', {
         form_name: trackingFormName,
+        funnel_name: 'pre_signup',
+        funnel_step: 'submit_success',
         marketing_opt_in: marketingOptIn,
         role,
+        source: 'marketing_website',
       })
       form.reset()
       setSuccessMessage('Pre-inscription envoyee avec succes.')
@@ -198,7 +210,10 @@ export function PreSignupForm({
       trackEvent('form_submit_error', {
         error_type: 'api_or_network',
         form_name: trackingFormName,
+        funnel_name: 'pre_signup',
+        funnel_step: 'submit_error',
         role,
+        source: 'marketing_website',
       })
       setSuccessMessage(null)
     }

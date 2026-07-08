@@ -55,7 +55,10 @@ export function ProPage() {
               onClick={() =>
                 trackEvent('cta_click', {
                   cta: 'pro_signup',
+                  funnel_name: 'pre_signup',
+                  funnel_step: 'cta_click',
                   location: 'pro_page',
+                  target_role: 'provider',
                   to: '/pre-inscription',
                 })
               }

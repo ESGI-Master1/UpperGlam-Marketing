@@ -32,16 +32,18 @@ Constat MCP du 8 juillet 2026 : le projet est accessible et a reçu des événem
 
 Prérequis : le lot 1 est mergé et les événements sont visibles dans PostHog.
 
-- [ ] Documenter la taxonomie des événements et propriétés non sensibles.
-- [ ] Ajouter ou mettre à jour les actions PostHog pour : choix du profil, tentative, succès et erreur.
-- [ ] Remplacer l'ancien funnel `pageview → CTA → contact` par les funnels :
-  - [ ] `pageview → CTA pré-inscription → choix du profil → tentative → succès` pour les particuliers ;
-  - [ ] le même funnel pour les professionnels.
-- [ ] Ajouter les taux d'erreur par profil et type d'erreur.
-- [ ] Ajouter la conversion par page d'entrée, CTA, source UTM, appareil et navigateur.
-- [ ] Ajouter un suivi du consentement accepté sans tenter de mesurer les refus avant consentement.
-- [ ] Mettre à jour les dashboards `UG - Marketing Conversion` et `UG - Engagement & Trust`.
-- [ ] Vérifier que chaque insight retourne des données cohérentes.
+- [x] Documenter la taxonomie des événements et propriétés non sensibles.
+- [x] Ajouter ou mettre à jour les actions PostHog pour : CTA, choix du profil, tentative, succès et erreur.
+- [x] Remplacer l'ancien funnel `pageview → CTA → contact` par les funnels :
+  - [x] `pageview → CTA pré-inscription → choix du profil → tentative → succès` pour les particuliers ;
+  - [x] le même funnel pour les professionnels.
+- [x] Ajouter les taux d'erreur par profil et type d'erreur.
+- [x] Ajouter la conversion par page d'entrée, CTA, source UTM, appareil et navigateur.
+- [x] Ajouter un suivi du consentement accepté sans tenter de mesurer les refus avant consentement.
+- [x] Mettre à jour les dashboards `UG - Marketing Conversion` et `UG - Engagement & Trust`.
+- [ ] Vérifier que chaque insight retourne des données cohérentes après réception de trafic réel.
+
+Constat MCP du 8 juillet 2026 : les actions PostHog et les insights du funnel sont créés, mais les nouveaux événements/propriétés ne sont pas encore présents dans la taxonomie ingérée. Les requêtes sont valides et se rempliront après déploiement et trafic avec consentement accepté.
 
 ## Lot 3 — Valider la pré-inscription de bout en bout
 
