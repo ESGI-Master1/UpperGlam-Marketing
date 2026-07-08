@@ -15,6 +15,7 @@ import {
   setAnalyticsConsentStatus,
   trackEvent,
   trackPageView,
+  posthogOptions,
 } from './analytics'
 
 describe('analytics consent gating', () => {
@@ -103,5 +104,17 @@ describe('analytics consent gating', () => {
     })
 
     expect(captureMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('drops every event emitted from an admin route', () => {
+    const beforeSend = posthogOptions.before_send
+    const filter = Array.isArray(beforeSend) ? beforeSend[0] : beforeSend
+    const event = {
+      event: '$autocapture',
+      properties: { $current_url: 'https://upperglam.fr/admin/login' },
+      uuid: 'event-id',
+    }
+
+    expect(filter?.(event)).toBeNull()
   })
 })

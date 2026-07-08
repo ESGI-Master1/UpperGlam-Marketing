@@ -4,8 +4,19 @@ import type { PostHogConfig } from 'posthog-js'
 export const posthogOptions: Partial<PostHogConfig> = {
   api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
   autocapture: true,
+  before_send: (event) => {
+    if (!event) return null
+
+    const eventUrl = String(event.properties?.$current_url ?? '')
+    const pathname = eventUrl
+      ? new URL(eventUrl, window.location.origin).pathname
+      : window.location.pathname
+
+    return pathname.startsWith('/admin') ? null : event
+  },
   capture_pageleave: true,
   capture_pageview: false,
+  disable_session_recording: true,
   person_profiles: 'identified_only',
 }
 
@@ -20,6 +31,8 @@ export type AnalyticsEventName =
   | 'cta_click'
   | 'faq_item_toggle'
   | 'form_submit'
+  | 'form_submit_attempt'
+  | 'form_submit_error'
   | 'legal_link_click'
   | 'nav_click'
   | 'outbound_click'
