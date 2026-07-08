@@ -63,6 +63,7 @@ describe('AdminLoginPage critical flow', () => {
 
   it('authenticates admin and redirects to /admin next path', async () => {
     loginAdminMock.mockResolvedValue({
+      expiresAt: '2026-07-08T12:00:00.000Z',
       token: 'admin-jwt',
       user: { email: 'admin@upperglam.fr', id: 1 },
     })
@@ -97,7 +98,8 @@ describe('AdminLoginPage critical flow', () => {
     )
     expect(setAdminSessionMock).toHaveBeenCalledWith(
       'admin-jwt',
-      'admin@upperglam.fr'
+      'admin@upperglam.fr',
+      '2026-07-08T12:00:00.000Z'
     )
     expect(assertAdminAccessMock).toHaveBeenCalledWith('admin-jwt')
   })
@@ -105,6 +107,7 @@ describe('AdminLoginPage critical flow', () => {
   it('shows dedicated message when account is not admin', async () => {
     const { ApiRequestError } = await import('../../lib/adminApi')
     loginAdminMock.mockResolvedValue({
+      expiresAt: '2026-07-08T12:00:00.000Z',
       token: 'admin-jwt',
       user: { email: 'admin@upperglam.fr', id: 1 },
     })
