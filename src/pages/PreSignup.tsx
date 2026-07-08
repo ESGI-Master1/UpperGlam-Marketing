@@ -28,7 +28,12 @@ export function PreSignupPage() {
 
   const selectRole = (nextRole: PreSignupRole) => {
     setRole(nextRole)
-    trackEvent('pre_signup_role_selected', { role: nextRole })
+    trackEvent('pre_signup_role_selected', {
+      form_name: roleConfig[nextRole].trackingFormName,
+      funnel_name: 'pre_signup',
+      funnel_step: 'role_selected',
+      role: nextRole,
+    })
   }
 
   return (

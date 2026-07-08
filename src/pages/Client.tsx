@@ -55,7 +55,10 @@ export function ClientPage() {
               onClick={() =>
                 trackEvent('cta_click', {
                   cta: 'client_signup',
+                  funnel_name: 'pre_signup',
+                  funnel_step: 'cta_click',
                   location: 'client_page',
+                  target_role: 'user',
                   to: '/pre-inscription',
                 })
               }

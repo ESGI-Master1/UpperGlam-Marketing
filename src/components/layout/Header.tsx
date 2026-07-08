@@ -52,13 +52,22 @@ export function Header() {
                     : 'rounded-full px-3 py-1.5 hover:bg-[var(--ug-surface)] hover:text-[var(--ug-text)]'
                 }}
                 key={item.to}
-                onClick={() =>
+                onClick={() => {
                   trackEvent('nav_click', {
                     label: item.label,
                     location: 'header',
                     to: item.to,
                   })
-                }
+                  if (item.to === '/pre-inscription') {
+                    trackEvent('cta_click', {
+                      cta: 'header_pre_signup',
+                      funnel_name: 'pre_signup',
+                      funnel_step: 'cta_click',
+                      location: 'header',
+                      to: item.to,
+                    })
+                  }
+                }}
                 to={item.to}
               >
                 {item.label}
