@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button'
 import {
   clearAdminSession,
   getAdminEmail,
+  getAdminSessionExpiresAt,
   getAdminToken,
 } from '../lib/adminSession'
 import { posthogOptions } from '../lib/analytics'
@@ -14,6 +15,7 @@ export function AdminLayout() {
   const navigate = useNavigate()
   const token = getAdminToken()
   const adminEmail = getAdminEmail()
+  const expiresAt = getAdminSessionExpiresAt()
   const onLoginPage = location.pathname === '/admin/login'
 
   useEffect(() => {
@@ -63,6 +65,11 @@ export function AdminLayout() {
               {adminEmail && (
                 <span className="rounded-full border border-[var(--ug-border)] px-3 py-1.5 text-sm text-[var(--ug-muted)]">
                   {adminEmail}
+                  {expiresAt && (
+                    <span className="ml-2 text-xs">
+                      expire {new Date(expiresAt).toLocaleString('fr-FR')}
+                    </span>
+                  )}
                 </span>
               )}
               <Button onClick={logout} size="md" variant="secondary">

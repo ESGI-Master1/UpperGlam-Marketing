@@ -75,6 +75,14 @@ function displayText(value: string | null | undefined) {
   return value
 }
 
+function getRecordLabel(record: AdminPreRegistration | null) {
+  if (!record) {
+    return 'ce dossier'
+  }
+
+  return `#${record.id} - ${record.applicant.firstName} ${record.applicant.lastName}`
+}
+
 export function AdminPreRegistrationsPage() {
   const token = getAdminToken()
   const navigate = useNavigate()
@@ -116,7 +124,9 @@ export function AdminPreRegistrationsPage() {
     (caughtError: unknown) => {
       if (
         caughtError instanceof ApiRequestError &&
-        (caughtError.status === 401 || caughtError.code === 'ADMIN_FORBIDDEN')
+        (caughtError.status === 401 ||
+          caughtError.status === 403 ||
+          caughtError.code === 'ADMIN_FORBIDDEN')
       ) {
         redirectToLogin()
         return true
@@ -234,6 +244,14 @@ export function AdminPreRegistrationsPage() {
       return
     }
 
+    if (
+      !window.confirm(
+        `Confirmer l'approbation du dossier ${getRecordLabel(detail)} ?`
+      )
+    ) {
+      return
+    }
+
     setActionError(null)
     setActionMessage(null)
     setIsSubmittingAction(true)
@@ -266,6 +284,14 @@ export function AdminPreRegistrationsPage() {
     const reason = rejectReason.trim()
     if (!reason) {
       setActionError('Le motif de refus est obligatoire.')
+      return
+    }
+
+    if (
+      !window.confirm(
+        `Confirmer le refus du dossier ${getRecordLabel(detail)} ?`
+      )
+    ) {
       return
     }
 
@@ -391,7 +417,11 @@ export function AdminPreRegistrationsPage() {
               </p>
             </div>
 
-            {listError && <p className="text-sm text-red-600">{listError}</p>}
+            {listError && (
+              <p className="text-sm text-red-600" role="alert">
+                {listError}
+              </p>
+            )}
 
             <div className="overflow-x-auto rounded-xl border border-[var(--ug-border)]">
               <table className="w-full min-w-[640px] text-left text-sm">
@@ -411,6 +441,7 @@ export function AdminPreRegistrationsPage() {
                       <td
                         className="px-3 py-3 text-[var(--ug-muted)]"
                         colSpan={6}
+                        role="status"
                       >
                         Chargement...
                       </td>
@@ -424,7 +455,15 @@ export function AdminPreRegistrationsPage() {
                             : 'cursor-pointer hover:bg-[var(--ug-surface)]'
                         }
                         key={item.id}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault()
+                            setSelectedId(item.id)
+                          }
+                        }}
                         onClick={() => setSelectedId(item.id)}
+                        tabIndex={0}
+                        aria-selected={item.id === selectedId}
                       >
                         <td className="px-3 py-2">#{item.id}</td>
                         <td className="px-3 py-2">{item.role}</td>
@@ -442,7 +481,7 @@ export function AdminPreRegistrationsPage() {
                         className="px-3 py-3 text-[var(--ug-muted)]"
                         colSpan={6}
                       >
-                        Aucun dossier.
+                        Aucun dossier ne correspond aux filtres.
                       </td>
                     </tr>
                   )}
@@ -478,10 +517,14 @@ export function AdminPreRegistrationsPage() {
             <h3 className="text-xl">Detail du dossier</h3>
 
             {isLoadingDetail && (
-              <p className="text-sm text-[var(--ug-muted)]">Chargement...</p>
+              <p className="text-sm text-[var(--ug-muted)]" role="status">
+                Chargement...
+              </p>
             )}
             {detailError && (
-              <p className="text-sm text-red-600">{detailError}</p>
+              <p className="text-sm text-red-600" role="alert">
+                {detailError}
+              </p>
             )}
 
             {!isLoadingDetail && !detail && (
@@ -644,7 +687,7 @@ export function AdminPreRegistrationsPage() {
                       type="button"
                       variant="primary"
                     >
-                      Approuver
+                      {isSubmittingAction ? 'Action en cours...' : 'Approuver'}
                     </Button>
                   </div>
 
@@ -658,24 +701,31 @@ export function AdminPreRegistrationsPage() {
                   />
                   <Button
                     disabled={
-                      isSubmittingAction || detail.review.status === 'rejected'
+                      isSubmittingAction ||
+                      detail.review.status === 'rejected' ||
+                      !rejectReason.trim()
                     }
                     onClick={rejectSelected}
                     size="md"
                     type="button"
                     variant="secondary"
                   >
-                    Refuser
+                    {isSubmittingAction ? 'Action en cours...' : 'Refuser'}
                   </Button>
                 </div>
 
                 {actionMessage && (
-                  <p className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm text-emerald-700">
+                  <p
+                    className="rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm text-emerald-700"
+                    role="status"
+                  >
                     {actionMessage}
                   </p>
                 )}
                 {actionError && (
-                  <p className="text-sm text-red-600">{actionError}</p>
+                  <p className="text-sm text-red-600" role="alert">
+                    {actionError}
+                  </p>
                 )}
               </div>
             )}

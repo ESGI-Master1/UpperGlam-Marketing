@@ -54,7 +54,7 @@ export function AdminLoginPage() {
 
     try {
       const authData = await loginAdmin(email, password)
-      setAdminSession(authData.token, email)
+      setAdminSession(authData.token, email, authData.expiresAt)
 
       try {
         await assertAdminAccess(authData.token)

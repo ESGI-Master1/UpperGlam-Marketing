@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import {
   clearAdminSession,
   getAdminEmail,
+  getAdminSessionExpiresAt,
   getAdminToken,
   setAdminSession,
 } from './adminSession'
@@ -35,17 +36,36 @@ describe('adminSession', () => {
   })
 
   it('stores and reads admin token/email', () => {
-    setAdminSession('token-123', 'admin@upperglam.fr')
+    const expiresAt = new Date(Date.now() + 60_000).toISOString()
+    setAdminSession('token-123', 'admin@upperglam.fr', expiresAt)
 
     expect(getAdminToken()).toBe('token-123')
     expect(getAdminEmail()).toBe('admin@upperglam.fr')
+    expect(getAdminSessionExpiresAt()).toBe(expiresAt)
   })
 
   it('clears admin session', () => {
-    setAdminSession('token-123', 'admin@upperglam.fr')
+    setAdminSession(
+      'token-123',
+      'admin@upperglam.fr',
+      new Date(Date.now() + 60_000).toISOString()
+    )
     clearAdminSession()
 
     expect(getAdminToken()).toBeNull()
     expect(getAdminEmail()).toBeNull()
+    expect(getAdminSessionExpiresAt()).toBeNull()
+  })
+
+  it('clears expired admin session when it is read', () => {
+    setAdminSession(
+      'token-123',
+      'admin@upperglam.fr',
+      new Date(Date.now() - 60_000).toISOString()
+    )
+
+    expect(getAdminToken()).toBeNull()
+    expect(getAdminEmail()).toBeNull()
+    expect(getAdminSessionExpiresAt()).toBeNull()
   })
 })

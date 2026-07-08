@@ -58,14 +58,17 @@ Constat MCP du 8 juillet 2026 : les actions PostHog et les insights du funnel so
 
 ## Lot 4 — Valider et durcir le back-office
 
-- [ ] Tester la connexion avec un admin et le refus d'un compte non-admin.
-- [ ] Vérifier la persistance, l'expiration et la déconnexion de session.
-- [ ] Tester la liste et toutes les actions de gestion des pré-inscriptions.
-- [ ] Vérifier les états vide, chargement et erreur.
-- [ ] Ajouter une confirmation avant toute action sensible.
-- [ ] Ajouter des notifications de succès et d'échec.
-- [ ] Vérifier le responsive et l'accessibilité du back-office.
-- [ ] Ajouter les tests manquants sur les parcours critiques.
+- [x] Tester la connexion avec un admin et le refus d'un compte non-admin.
+- [x] Vérifier la persistance, l'expiration et la déconnexion de session.
+- [x] Tester la liste et toutes les actions de gestion des pré-inscriptions.
+- [x] Vérifier les états vide, chargement et erreur.
+- [x] Ajouter une confirmation avant toute action sensible.
+- [x] Ajouter des notifications de succès et d'échec.
+- [x] Vérifier l'accessibilité clavier et les retours accessibles du back-office.
+- [ ] Confirmer visuellement le responsive du back-office sur l'environnement déployé.
+- [x] Ajouter les tests manquants sur les parcours critiques.
+
+Constat du 8 juillet 2026 : le back-office dispose déjà de la connexion, de la protection de routes, de la liste, du détail et des actions. Le lot ajoute le stockage de l'expiration de session, la purge locale des sessions expirées, les confirmations avant approbation/refus, les retours accessibles `status`/`alert`, la sélection clavier des dossiers et les tests critiques associés. La validation responsive reste à confirmer visuellement sur l'environnement déployé.
 
 ## Lot 5 — Améliorer la gestion des pré-inscriptions
 
