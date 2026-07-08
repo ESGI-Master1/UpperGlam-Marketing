@@ -94,9 +94,10 @@ export function PreSignupForm({
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const form = event.currentTarget
     setLocalError(null)
     setSuccessMessage(null)
-    const formData = new FormData(event.currentTarget)
+    const formData = new FormData(form)
     const interest = getTrimmedValue(formData, 'interest')
     const comment = getTrimmedValue(formData, 'comment')
     const firstName = getTrimmedValue(formData, 'firstName')
@@ -122,12 +123,29 @@ export function PreSignupForm({
     )
     const marketingOptIn = formData.get('marketingOptIn') === 'on'
 
+    trackEvent('form_submit_attempt', {
+      form_name: trackingFormName,
+      role,
+    })
+
     if (!firstName || !lastName) {
+      trackEvent('form_submit_error', {
+        error_type: 'client_validation',
+        field: 'identity',
+        form_name: trackingFormName,
+        role,
+      })
       setLocalError('Le prenom et le nom sont obligatoires.')
       return
     }
 
     if (role === 'provider' && !displayName) {
+      trackEvent('form_submit_error', {
+        error_type: 'client_validation',
+        field: 'provider_display_name',
+        form_name: trackingFormName,
+        role,
+      })
       setLocalError('Le nom public est obligatoire pour un prestataire.')
       return
     }
@@ -171,11 +189,17 @@ export function PreSignupForm({
       })
       trackEvent('form_submit', {
         form_name: trackingFormName,
+        marketing_opt_in: marketingOptIn,
         role,
       })
-      event.currentTarget.reset()
+      form.reset()
       setSuccessMessage('Pre-inscription envoyee avec succes.')
     } catch {
+      trackEvent('form_submit_error', {
+        error_type: 'api_or_network',
+        form_name: trackingFormName,
+        role,
+      })
       setSuccessMessage(null)
     }
   }
