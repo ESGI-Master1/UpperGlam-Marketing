@@ -98,6 +98,40 @@ describe('adminApi critical flows', () => {
     )
   })
 
+  it('fetchAdminAuditEvents builds query parameters and auth header', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      createMockResponse({
+        body: {
+          data: [{ action: 'admin.pre_registration.approved', id: 1 }],
+          meta: { limit: 10, page: 1, total: 1 },
+        },
+        ok: true,
+      })
+    )
+
+    vi.stubGlobal('fetch', fetchMock)
+    const { fetchAdminAuditEvents } = await import('./adminApi')
+
+    await fetchAdminAuditEvents('token-abc', {
+      limit: 10,
+      page: 1,
+      preRegistrationId: 5,
+    })
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://api.upperglam.test/admin/audit-events?limit=10&page=1&preRegistrationId=5',
+      {
+        body: undefined,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer token-abc',
+        },
+        method: 'GET',
+      }
+    )
+  })
+
   it('throws mapped ApiRequestError on backend validation error', async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       createMockResponse({
