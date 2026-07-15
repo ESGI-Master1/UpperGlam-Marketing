@@ -59,10 +59,10 @@ export function ClientPage() {
                   funnel_step: 'cta_click',
                   location: 'client_page',
                   target_role: 'user',
-                  to: '/pre-inscription',
+                  to: '/pre-inscription?role=user',
                 })
               }
-              to="/pre-inscription"
+              to="/pre-inscription?role=user"
             >
               Je me pre-inscris
             </Link>

@@ -60,11 +60,11 @@ export const router = createBrowserRouter([
       { path: 'pre-inscription', element: <PreSignupPage /> },
       {
         path: 'pre-inscription/client',
-        element: <Navigate replace to="/pre-inscription" />,
+        element: <Navigate replace to="/pre-inscription?role=user" />,
       },
       {
         path: 'pre-inscription/pro',
-        element: <Navigate replace to="/pre-inscription" />,
+        element: <Navigate replace to="/pre-inscription?role=provider" />,
       },
       { path: 'login', element: <LoginRedirectPage /> },
       { path: 'legal', element: <LegalPage /> },

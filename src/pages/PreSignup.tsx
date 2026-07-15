@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
 import { PreSignupForm } from '../components/pre-signup/PreSignupForm'
 import { Button } from '../components/ui/Button'
@@ -24,10 +25,15 @@ const roleConfig = {
 }
 
 export function PreSignupPage() {
-  const [role, setRole] = useState<PreSignupRole | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialRole = searchParams.get('role')
+  const [role, setRole] = useState<PreSignupRole | null>(
+    initialRole === 'provider' || initialRole === 'user' ? initialRole : null
+  )
 
   const selectRole = (nextRole: PreSignupRole) => {
     setRole(nextRole)
+    setSearchParams({ role: nextRole })
     trackEvent('pre_signup_role_selected', {
       form_name: roleConfig[nextRole].trackingFormName,
       funnel_name: 'pre_signup',

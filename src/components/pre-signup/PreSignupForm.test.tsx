@@ -114,4 +114,63 @@ describe('PreSignupForm critical flow', () => {
     expect(requestMock).not.toHaveBeenCalled()
     expect(trackEventMock).not.toHaveBeenCalled()
   })
+
+  it('submits provider pre-registration payload with profile data', async () => {
+    requestMock.mockResolvedValue({ data: { id: 2 } })
+    const user = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <PreSignupForm
+          ctaLabel="Je me pre-inscris en tant que pro"
+          intro="intro"
+          role="provider"
+          title="title"
+          trackingFormName="pre_signup_pro"
+        />
+      </MemoryRouter>
+    )
+
+    await user.type(screen.getByLabelText(/Prenom/i), 'Sarah')
+    await user.type(screen.getByLabelText(/^Nom$/i), 'Glam')
+    await user.type(screen.getByLabelText(/Nom public/i), 'Sarah Studio')
+    await user.type(screen.getByLabelText(/Email/i), 'sarah@example.com')
+    await user.type(screen.getByLabelText(/Mot de passe/i), 'StrongPass123!')
+    await user.type(screen.getByLabelText(/Telephone/i), '0600000000')
+    await user.type(screen.getByLabelText(/Ville/i), 'Paris')
+    await user.type(screen.getByLabelText(/Code postal/i), '75011')
+    await user.type(
+      screen.getByLabelText(/Specialites/i),
+      'coiffure, maquillage'
+    )
+    await user.click(screen.getByRole('checkbox', { name: /A domicile/i }))
+    await user.type(screen.getByLabelText(/Prix de depart/i), '65')
+    await user.click(screen.getByRole('checkbox', { name: /J accepte/i }))
+    await user.click(
+      screen.getByRole('button', { name: /Je me pre-inscris en tant que pro/i })
+    )
+
+    await waitFor(() => {
+      expect(requestMock).toHaveBeenCalledTimes(1)
+    })
+
+    expect(requestMock).toHaveBeenCalledWith('/pre-registration', {
+      body: expect.objectContaining({
+        city: 'Paris',
+        email: 'sarah@example.com',
+        firstName: 'Sarah',
+        lastName: 'Glam',
+        providerProfile: {
+          displayName: 'Sarah Studio',
+          priceFromCents: 6500,
+          serviceModes: ['home'],
+          specialties: ['coiffure', 'maquillage'],
+        },
+        role: 'provider',
+        source: 'marketing_website',
+        zipcode: '75011',
+      }),
+      method: 'POST',
+    })
+  })
 })

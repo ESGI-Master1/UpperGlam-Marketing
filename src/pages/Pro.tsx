@@ -59,10 +59,10 @@ export function ProPage() {
                   funnel_step: 'cta_click',
                   location: 'pro_page',
                   target_role: 'provider',
-                  to: '/pre-inscription',
+                  to: '/pre-inscription?role=provider',
                 })
               }
-              to="/pre-inscription"
+              to="/pre-inscription?role=provider"
             >
               Je me pre-inscris en tant que pro
             </Link>
