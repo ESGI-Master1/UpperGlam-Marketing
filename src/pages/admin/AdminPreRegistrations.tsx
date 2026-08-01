@@ -37,18 +37,31 @@ const roleOptions = [
 
 const reviewStatusOptions = [
   { label: 'Tous les statuts dossier', value: '' },
-  { label: 'Submitted', value: 'submitted' },
-  { label: 'In review', value: 'in_review' },
-  { label: 'Approved', value: 'approved' },
-  { label: 'Rejected', value: 'rejected' },
+  { label: 'À examiner', value: 'submitted' },
+  { label: 'En cours de revue', value: 'in_review' },
+  { label: 'Approuvés', value: 'approved' },
+  { label: 'Refusés', value: 'rejected' },
 ]
 
 const accountStatusOptions = [
   { label: 'Tous les statuts compte', value: '' },
-  { label: 'Pending', value: 'pending' },
-  { label: 'Active', value: 'active' },
-  { label: 'Suspended', value: 'suspended' },
+  { label: 'En attente', value: 'pending' },
+  { label: 'Actifs', value: 'active' },
+  { label: 'Suspendus', value: 'suspended' },
 ]
+
+const reviewLabels: Record<AdminReviewStatus, string> = {
+  approved: 'Approuvé',
+  in_review: 'En revue',
+  rejected: 'Refusé',
+  submitted: 'À examiner',
+}
+
+const accountLabels: Record<AdminAccountStatus, string> = {
+  active: 'Actif',
+  pending: 'En attente',
+  suspended: 'Suspendu',
+}
 
 function formatDate(value: string | null) {
   if (!value) {
@@ -390,9 +403,15 @@ export function AdminPreRegistrationsPage() {
       <div className="space-y-5">
         <Card className="space-y-4">
           <div className="space-y-2">
-            <h2 className="text-2xl">Gestion des pre-inscriptions</h2>
+            <p className="text-xs font-bold tracking-[0.18em] text-[#9a753b] uppercase">
+              Admissions
+            </p>
+            <h2 className="font-serif text-3xl text-[#201a17]">
+              Gestion des pré-inscriptions
+            </h2>
             <p className="text-sm text-[var(--ug-muted)]">
-              Consultez, approuvez ou refusez les dossiers.
+              Examinez chaque demande, retrouvez les informations utiles et
+              décidez en toute confiance.
             </p>
           </div>
 
@@ -410,7 +429,7 @@ export function AdminPreRegistrationsPage() {
               value={filters.search}
             />
             <Select
-              label="Role"
+              label="Profil"
               onChange={(event) =>
                 setFilters((current) => ({
                   ...current,
@@ -454,7 +473,7 @@ export function AdminPreRegistrationsPage() {
                 type="button"
                 variant="secondary"
               >
-                Reinitialiser
+                Réinitialiser
               </Button>
             </div>
           </form>
@@ -482,7 +501,7 @@ export function AdminPreRegistrationsPage() {
                 <thead className="bg-[var(--ug-surface)] text-[var(--ug-muted)]">
                   <tr>
                     <th className="px-3 py-2">ID</th>
-                    <th className="px-3 py-2">Role</th>
+                    <th className="px-3 py-2">Profil</th>
                     <th className="px-3 py-2">Candidat</th>
                     <th className="px-3 py-2">Ville</th>
                     <th className="px-3 py-2">Dossier</th>
@@ -520,13 +539,21 @@ export function AdminPreRegistrationsPage() {
                         aria-selected={item.id === selectedId}
                       >
                         <td className="px-3 py-2">#{item.id}</td>
-                        <td className="px-3 py-2">{item.role}</td>
+                        <td className="px-3 py-2">
+                          {item.role === 'provider'
+                            ? 'Prestataire'
+                            : 'Particulier'}
+                        </td>
                         <td className="px-3 py-2">
                           {item.applicant.firstName} {item.applicant.lastName}
                         </td>
                         <td className="px-3 py-2">{item.applicant.city}</td>
-                        <td className="px-3 py-2">{item.review.status}</td>
-                        <td className="px-3 py-2">{item.accountStatus}</td>
+                        <td className="px-3 py-2">
+                          {reviewLabels[item.review.status]}
+                        </td>
+                        <td className="px-3 py-2">
+                          {accountLabels[item.accountStatus]}
+                        </td>
                       </tr>
                     ))
                   ) : (
@@ -551,7 +578,7 @@ export function AdminPreRegistrationsPage() {
                 type="button"
                 variant="secondary"
               >
-                Precedent
+                Précédent
               </Button>
               <Button
                 disabled={page >= maxPage || isLoadingList}
@@ -568,7 +595,7 @@ export function AdminPreRegistrationsPage() {
           </Card>
 
           <Card className="space-y-4">
-            <h3 className="text-xl">Detail du dossier</h3>
+            <h3 className="font-serif text-2xl">Détail du dossier</h3>
 
             {isLoadingDetail && (
               <p className="text-sm text-[var(--ug-muted)]" role="status">
@@ -583,16 +610,18 @@ export function AdminPreRegistrationsPage() {
 
             {!isLoadingDetail && !detail && (
               <p className="text-sm text-[var(--ug-muted)]">
-                Selectionnez un dossier pour afficher son detail.
+                Sélectionnez un dossier pour afficher son détail.
               </p>
             )}
 
             {detail && (
               <div className="space-y-4 text-sm">
                 <div className="flex flex-wrap gap-2">
-                  <Badge>{detail.role}</Badge>
-                  <Badge>{detail.review.status}</Badge>
-                  <Badge>{detail.accountStatus}</Badge>
+                  <Badge>
+                    {detail.role === 'provider' ? 'Prestataire' : 'Particulier'}
+                  </Badge>
+                  <Badge>{reviewLabels[detail.review.status]}</Badge>
+                  <Badge>{accountLabels[detail.accountStatus]}</Badge>
                 </div>
 
                 <div className="grid gap-2 md:grid-cols-2">
@@ -600,7 +629,7 @@ export function AdminPreRegistrationsPage() {
                     <strong>Email:</strong> {detail.applicant.email}
                   </p>
                   <p>
-                    <strong>Telephone:</strong> {detail.applicant.phone}
+                    <strong>Téléphone :</strong> {detail.applicant.phone}
                   </p>
                   <p>
                     <strong>Prenom:</strong> {detail.applicant.firstName}
@@ -617,10 +646,11 @@ export function AdminPreRegistrationsPage() {
                     {detail.applicant.zipcode}
                   </p>
                   <p>
-                    <strong>Cree le:</strong> {formatDate(detail.createdAt)}
+                    <strong>Créé le :</strong> {formatDate(detail.createdAt)}
                   </p>
                   <p>
-                    <strong>Maj le:</strong> {formatDate(detail.updatedAt)}
+                    <strong>Mis à jour le :</strong>{' '}
+                    {formatDate(detail.updatedAt)}
                   </p>
                 </div>
 
@@ -712,7 +742,8 @@ export function AdminPreRegistrationsPage() {
                 <div className="space-y-2 rounded-xl border border-[var(--ug-border)] p-3">
                   <h4 className="font-semibold">Revue</h4>
                   <p>
-                    <strong>Statut:</strong> {detail.review.status}
+                    <strong>Statut :</strong>{' '}
+                    {reviewLabels[detail.review.status]}
                   </p>
                   <p>
                     <strong>Revu le:</strong>{' '}

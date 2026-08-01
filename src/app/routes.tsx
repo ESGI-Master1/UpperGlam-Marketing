@@ -18,6 +18,9 @@ import { PreSignupPage } from '../pages/PreSignup'
 import { ProPage } from '../pages/Pro'
 import { AdminLoginPage } from '../pages/admin/AdminLogin'
 import { AdminPreRegistrationsPage } from '../pages/admin/AdminPreRegistrations'
+import { AdminDashboardPage } from '../pages/admin/AdminDashboard'
+import { AdminProvidersPage } from '../pages/admin/AdminProviders'
+import { AdminUsersPage } from '../pages/admin/AdminUsers'
 
 export const router = createBrowserRouter([
   {
@@ -26,15 +29,27 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate replace to="/admin/pre-inscriptions" />,
+        element: <Navigate replace to="/admin/tableau-de-bord" />,
       },
       { path: 'login', element: <AdminLoginPage /> },
       {
         element: <AdminRequireAuth />,
         children: [
           {
+            path: 'tableau-de-bord',
+            element: <AdminDashboardPage />,
+          },
+          {
             path: 'pre-inscriptions',
             element: <AdminPreRegistrationsPage />,
+          },
+          {
+            path: 'utilisateurs',
+            element: <AdminUsersPage />,
+          },
+          {
+            path: 'prestataires',
+            element: <AdminProvidersPage />,
           },
         ],
       },
