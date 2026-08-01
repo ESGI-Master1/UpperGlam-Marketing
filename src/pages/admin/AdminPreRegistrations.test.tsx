@@ -7,6 +7,7 @@ import { AdminPreRegistrationsPage } from './AdminPreRegistrations'
 const {
   fetchAdminPreRegistrationsMock,
   fetchAdminPreRegistrationByIdMock,
+  fetchAdminAuditEventsMock,
   approveAdminPreRegistrationMock,
   rejectAdminPreRegistrationMock,
   clearAdminSessionMock,
@@ -14,6 +15,7 @@ const {
 } = vi.hoisted(() => ({
   fetchAdminPreRegistrationsMock: vi.fn(),
   fetchAdminPreRegistrationByIdMock: vi.fn(),
+  fetchAdminAuditEventsMock: vi.fn(),
   approveAdminPreRegistrationMock: vi.fn(),
   rejectAdminPreRegistrationMock: vi.fn(),
   clearAdminSessionMock: vi.fn(),
@@ -48,6 +50,7 @@ vi.mock('../../lib/adminApi', () => {
   return {
     ApiRequestError,
     approveAdminPreRegistration: approveAdminPreRegistrationMock,
+    fetchAdminAuditEvents: fetchAdminAuditEventsMock,
     fetchAdminPreRegistrationById: fetchAdminPreRegistrationByIdMock,
     fetchAdminPreRegistrations: fetchAdminPreRegistrationsMock,
     rejectAdminPreRegistration: rejectAdminPreRegistrationMock,
@@ -121,6 +124,7 @@ describe('AdminPreRegistrationsPage critical actions', () => {
   beforeEach(() => {
     fetchAdminPreRegistrationsMock.mockReset()
     fetchAdminPreRegistrationByIdMock.mockReset()
+    fetchAdminAuditEventsMock.mockReset()
     approveAdminPreRegistrationMock.mockReset()
     rejectAdminPreRegistrationMock.mockReset()
     clearAdminSessionMock.mockReset()
@@ -133,6 +137,20 @@ describe('AdminPreRegistrationsPage critical actions', () => {
       meta: { limit: 20, page: 1, total: 1 },
     })
     fetchAdminPreRegistrationByIdMock.mockResolvedValue(sampleRecord)
+    fetchAdminAuditEventsMock.mockResolvedValue({
+      data: [
+        {
+          action: 'admin.pre_registration.approved',
+          adminEmail: 'admin@upperglam.fr',
+          adminUserId: 7,
+          createdAt: '2026-07-14T12:00:00.000Z',
+          details: { targetUserId: 42 },
+          id: 10,
+          preRegistrationId: 1,
+        },
+      ],
+      meta: { limit: 10, page: 1, total: 1 },
+    })
     approveAdminPreRegistrationMock.mockResolvedValue({ message: 'approved' })
     rejectAdminPreRegistrationMock.mockResolvedValue({ message: 'rejected' })
   })
@@ -155,6 +173,9 @@ describe('AdminPreRegistrationsPage critical actions', () => {
         screen.getByRole('button', { name: /Approuver/i })
       ).toBeInTheDocument()
     })
+    expect(
+      await screen.findByText(/admin.pre_registration.approved/i)
+    ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /Approuver/i }))
 
@@ -166,6 +187,11 @@ describe('AdminPreRegistrationsPage critical actions', () => {
         'token-abc',
         1
       )
+      expect(fetchAdminAuditEventsMock).toHaveBeenCalledWith('token-abc', {
+        limit: 10,
+        page: 1,
+        preRegistrationId: 1,
+      })
     })
 
     await user.type(

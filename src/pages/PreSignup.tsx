@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
 import { PreSignupForm } from '../components/pre-signup/PreSignupForm'
 import { Button } from '../components/ui/Button'
@@ -10,24 +11,30 @@ type PreSignupRole = 'provider' | 'user'
 
 const roleConfig = {
   provider: {
-    ctaLabel: 'Je me pre-inscris en tant que pro',
-    intro: 'Decrivez votre activite pour etre prioritaire au lancement.',
-    title: 'Rejoignez la liste d attente Pro',
+    ctaLabel: 'Créer mon profil professionnel',
+    intro: 'Présentez votre activité et les prestations que vous proposez.',
+    title: 'Créer mon profil professionnel',
     trackingFormName: 'pre_signup_pro' as const,
   },
   user: {
-    ctaLabel: 'Je me pre-inscris',
-    intro: 'Laissez vos informations pour etre informe(e) du lancement.',
-    title: 'Rejoignez la liste d attente Client(e)',
+    ctaLabel: 'Créer mon profil client',
+    intro:
+      'Renseignez vos préférences pour trouver les prestations qui vous correspondent.',
+    title: 'Créer mon profil client',
     trackingFormName: 'pre_signup_client' as const,
   },
 }
 
 export function PreSignupPage() {
-  const [role, setRole] = useState<PreSignupRole | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialRole = searchParams.get('role')
+  const [role, setRole] = useState<PreSignupRole | null>(
+    initialRole === 'provider' || initialRole === 'user' ? initialRole : null
+  )
 
   const selectRole = (nextRole: PreSignupRole) => {
     setRole(nextRole)
+    setSearchParams({ role: nextRole })
     trackEvent('pre_signup_role_selected', {
       form_name: roleConfig[nextRole].trackingFormName,
       funnel_name: 'pre_signup',
@@ -39,8 +46,8 @@ export function PreSignupPage() {
   return (
     <>
       <PageMeta
-        description="Pré-inscription Upper Glam pour client(e)s et professionnel(le)s."
-        title="Pre-inscription"
+        description="Créez votre profil Upper Glam en tant que client ou professionnel de la beauté."
+        title="Créer mon profil"
       />
       <Section>
         <div className="mx-auto max-w-3xl space-y-4">

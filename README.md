@@ -1,6 +1,41 @@
-# React + TypeScript + Vite
+# UpperGlam Marketing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![CI](https://github.com/ESGI-Master1/UpperGlam-Marketing/actions/workflows/ci.yml/badge.svg)](https://github.com/ESGI-Master1/UpperGlam-Marketing/actions/workflows/ci.yml)
+
+Site public, funnel de pre-inscription et back-office UpperGlam, construits avec React, TypeScript et Vite.
+
+## Lancement local
+
+```bash
+cp .env.example .env
+npm ci
+npm run dev
+```
+
+Le site est servi par defaut sur `http://localhost:5173` et utilise `VITE_PUBLIC_BACKEND_URL` pour joindre l'API. Les variables `VITE_PUBLIC_*` sont publiques : aucun secret ne doit y etre place.
+
+## Validation et build
+
+```bash
+npm run workflow:check
+npm run preview
+```
+
+Le guide commun local/preview/production, incluant Apache et les sauvegardes, se trouve dans `UpperGlam-Backend/docs/infrastructure.md` lorsque les trois repos sont clones cote a cote.
+
+## Variables
+
+- `VITE_PUBLIC_BACKEND_URL` : URL de l'API.
+- `VITE_PUBLIC_LOGIN_URL` : destination de connexion client.
+- `VITE_PUBLIC_POSTHOG_KEY` et `VITE_PUBLIC_POSTHOG_HOST` : projet analytics public soumis au consentement.
+
+## Structure
+
+Le code applicatif est dans `src/`, les tests Vitest sont colocalises et la sortie de production est generee dans `dist/`.
+
+<!-- Historical Vite notes retained below for framework maintenance. -->
+
+## Notes Vite
 
 Currently, two official plugins are available:
 

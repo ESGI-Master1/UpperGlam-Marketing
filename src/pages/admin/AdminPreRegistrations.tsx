@@ -10,9 +10,11 @@ import { Select } from '../../components/ui/Select'
 import {
   ApiRequestError,
   approveAdminPreRegistration,
+  fetchAdminAuditEvents,
   fetchAdminPreRegistrationById,
   fetchAdminPreRegistrations,
   rejectAdminPreRegistration,
+  type AdminAuditEvent,
   type AdminAccountStatus,
   type AdminPreRegistration,
   type AdminReviewStatus,
@@ -83,6 +85,17 @@ function getRecordLabel(record: AdminPreRegistration | null) {
   return `#${record.id} - ${record.applicant.firstName} ${record.applicant.lastName}`
 }
 
+function formatAuditDetails(details: unknown) {
+  if (!details || typeof details !== 'object') {
+    return '-'
+  }
+
+  const record = details as Record<string, unknown>
+  return Object.entries(record)
+    .map(([key, value]) => `${key}: ${String(value)}`)
+    .join(' | ')
+}
+
 export function AdminPreRegistrationsPage() {
   const token = getAdminToken()
   const navigate = useNavigate()
@@ -108,6 +121,9 @@ export function AdminPreRegistrationsPage() {
   const [detail, setDetail] = useState<AdminPreRegistration | null>(null)
   const [isLoadingDetail, setIsLoadingDetail] = useState(false)
   const [detailError, setDetailError] = useState<string | null>(null)
+  const [auditEvents, setAuditEvents] = useState<AdminAuditEvent[]>([])
+  const [isLoadingAudit, setIsLoadingAudit] = useState(false)
+  const [auditError, setAuditError] = useState<string | null>(null)
 
   const [rejectReason, setRejectReason] = useState('')
   const [actionError, setActionError] = useState<string | null>(null)
@@ -203,6 +219,40 @@ export function AdminPreRegistrationsPage() {
     [handleAdminError, redirectToLogin, token]
   )
 
+  const loadAuditEvents = useCallback(
+    async (preRegistrationId: number) => {
+      if (!token) {
+        redirectToLogin()
+        return
+      }
+
+      setIsLoadingAudit(true)
+      setAuditError(null)
+
+      try {
+        const response = await fetchAdminAuditEvents(token, {
+          limit: 10,
+          page: 1,
+          preRegistrationId,
+        })
+        setAuditEvents(response.data)
+      } catch (caughtError) {
+        if (handleAdminError(caughtError)) {
+          return
+        }
+
+        setAuditError(
+          caughtError instanceof Error
+            ? caughtError.message
+            : "Impossible de charger l'historique d'audit."
+        )
+      } finally {
+        setIsLoadingAudit(false)
+      }
+    },
+    [handleAdminError, redirectToLogin, token]
+  )
+
   useEffect(() => {
     void loadList()
   }, [loadList])
@@ -211,6 +261,7 @@ export function AdminPreRegistrationsPage() {
     if (!list.length) {
       setSelectedId(null)
       setDetail(null)
+      setAuditEvents([])
       return
     }
 
@@ -220,7 +271,8 @@ export function AdminPreRegistrationsPage() {
     }
 
     void loadDetail(selectedId)
-  }, [list, loadDetail, selectedId])
+    void loadAuditEvents(selectedId)
+  }, [list, loadAuditEvents, loadDetail, selectedId])
 
   const applyFilters = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -261,6 +313,7 @@ export function AdminPreRegistrationsPage() {
       setActionMessage(response.message ?? 'Pre-inscription approuvee.')
       await loadList()
       await loadDetail(selectedId)
+      await loadAuditEvents(selectedId)
     } catch (caughtError) {
       if (handleAdminError(caughtError)) {
         return
@@ -309,6 +362,7 @@ export function AdminPreRegistrationsPage() {
       setRejectReason('')
       await loadList()
       await loadDetail(selectedId)
+      await loadAuditEvents(selectedId)
     } catch (caughtError) {
       if (handleAdminError(caughtError)) {
         return
@@ -727,6 +781,55 @@ export function AdminPreRegistrationsPage() {
                     {actionError}
                   </p>
                 )}
+
+                <div className="space-y-2 rounded-xl border border-[var(--ug-border)] p-3">
+                  <h4 className="font-semibold">Historique d'audit</h4>
+                  {isLoadingAudit && (
+                    <p className="text-sm text-[var(--ug-muted)]" role="status">
+                      Chargement de l'historique...
+                    </p>
+                  )}
+                  {auditError && (
+                    <p className="text-sm text-red-600" role="alert">
+                      {auditError}
+                    </p>
+                  )}
+                  {!isLoadingAudit && !auditEvents.length && !auditError && (
+                    <p className="text-sm text-[var(--ug-muted)]">
+                      Aucun evenement d'audit pour ce dossier.
+                    </p>
+                  )}
+                  {auditEvents.length > 0 && (
+                    <div className="overflow-x-auto rounded-xl border border-[var(--ug-border)]">
+                      <table className="w-full min-w-[520px] text-left text-xs">
+                        <thead className="bg-[var(--ug-surface)] text-[var(--ug-muted)]">
+                          <tr>
+                            <th className="px-3 py-2">Date</th>
+                            <th className="px-3 py-2">Action</th>
+                            <th className="px-3 py-2">Admin</th>
+                            <th className="px-3 py-2">Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {auditEvents.map((event) => (
+                            <tr key={event.id}>
+                              <td className="px-3 py-2">
+                                {formatDate(event.createdAt)}
+                              </td>
+                              <td className="px-3 py-2">{event.action}</td>
+                              <td className="px-3 py-2">
+                                {displayText(event.adminEmail)}
+                              </td>
+                              <td className="px-3 py-2">
+                                {formatAuditDetails(event.details)}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </Card>

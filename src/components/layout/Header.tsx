@@ -4,10 +4,10 @@ import { Container } from './Container'
 
 const navItems = [
   { label: 'Accueil', to: '/' },
-  { label: 'Comment ca marche', to: '/how-it-works' },
+  { label: 'Comment ça marche', to: '/how-it-works' },
   { label: 'Client & Pro', match: ['/client', '/pro'], to: '/client' },
   {
-    label: 'Pre-inscription',
+    label: 'Créer mon profil',
     match: [
       '/pre-inscription',
       '/pre-inscription/client',
@@ -15,15 +15,15 @@ const navItems = [
     ],
     to: '/pre-inscription',
   },
-  { label: 'A propos', to: '/about' },
+  { label: 'À propos', to: '/about' },
 ]
 
 export function Header() {
   const location = useLocation()
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[var(--ug-border)] bg-[color:var(--ug-header-bg)] backdrop-blur">
-      <Container className="py-4">
+    <header className="sticky top-0 z-30 border-b border-[var(--ug-border)] bg-[color:var(--ug-header-bg)] backdrop-blur-xl">
+      <Container className="py-3">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <NavLink
             className="inline-flex items-center gap-2"

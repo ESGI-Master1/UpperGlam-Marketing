@@ -1,70 +1,71 @@
+import { Link } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
 import { Badge } from '../components/ui/Badge'
-import { Card } from '../components/ui/Card'
 import { Section } from '../components/ui/Section'
-import { siteCopy } from '../content/copy'
+import { buttonClasses } from '../components/ui/buttonClasses'
 
 export function AboutPage() {
   return (
     <>
       <PageMeta
-        description="A propos de la vision Upper Glam: relier experience client premium et croissance des professionnels beaute."
-        title="A propos"
+        description="Découvrez la vision d’Upper Glam et son approche de la réservation de prestations beauté."
+        title="À propos d’Upper Glam"
       />
-      <Section>
-        <div className="space-y-8">
-          <div className="space-y-3">
-            <Badge>A propos</Badge>
-            <h1 className="text-4xl sm:text-5xl">A propos de nous</h1>
-            <p className="text-sm text-[var(--ug-muted)]">
-              Pauline Lavergne & Senda Ballin
-            </p>
+      <Section className="pt-14 sm:pt-20">
+        <div className="grid items-end gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-6">
+            <Badge>À propos</Badge>
+            <h1 className="text-5xl leading-tight sm:text-6xl">
+              Rendre la disponibilité aussi visible que le talent
+            </h1>
           </div>
-          <Card className="space-y-3">
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Deux passionnees de beaute et de nouvelles technologies, animees
-              par une mission simple: rendre la beaute accessible, rapide et
-              sans stress.
+          <p className="text-xl leading-relaxed text-[var(--ug-muted)]">
+            Upper Glam part d’un constat simple : les professionnels de la
+            beauté sont visibles en ligne, mais leur disponibilité reste
+            difficile à réserver.
+          </p>
+        </div>
+      </Section>
+
+      <Section>
+        <figure className="about-visual">
+          <img
+            alt="Rendez-vous beauté dans un studio contemporain"
+            height="1024"
+            loading="lazy"
+            src="/media/editorial/beauty-workstation.webp"
+            width="1536"
+          />
+          <figcaption>L’univers visuel Upper Glam.</figcaption>
+        </figure>
+      </Section>
+
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+          <div>
+            <Badge>La démarche</Badge>
+          </div>
+          <div className="space-y-8 text-lg leading-relaxed text-[var(--ug-muted)]">
+            <p>
+              Le produit relie trois expériences : une application pour trouver
+              et réserver, un espace pour gérer son activité, et des outils
+              d’administration pour sécuriser la plateforme.
             </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Chez Upper Glam, nous avons imagine une solution pour repondre aux
-              besoins des client(e)s comme des professionnel(le)s.
+            <p>
+              L’écosystème Upper Glam rassemble la recherche, les profils,
+              l’agenda, la réservation et le paiement dans un parcours cohérent
+              sur Android, iOS et le web. Chaque écran privilégie la lisibilité,
+              la confiance et la rapidité d’action.
             </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Trouver un(e) expert(e) de la beaute, c est parfois un veritable
-              casse-tete, meme avec les reseaux sociaux. Entre les profils peu
-              clairs, les avis douteux et les recherches interminables, denicher
-              la perle rare releve souvent du parcours du combattant.
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              C est pour ca que nous avons cree Upper Glam: une plateforme
-              transparente et intuitive.
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Pour les client(e)s: des photos authentiques, des evaluations
-              verifiees, et une interface qui te permet de choisir facilement
-              le/la professionnel(le) qui correspond a tes attentes.
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Pour les professionnel(le)s: un moyen efficace de remplir votre
-              agenda avec des demandes qualifiees, et une mise en avant de votre
-              talent aupres de potentiel(le)s client(e)s.
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Nous croyons en une beaute simple, accessible et connectee, et
-              avec Upper Glam, nous voulons revolutionner la facon dont
-              client(e)s et professionnel(le)s se rencontrent.
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Tu es pret(e) a rejoindre l'aventure ?
-            </p>
-            <p className="max-w-4xl text-sm leading-relaxed text-[var(--ug-muted)]">
-              Instagram: {siteCopy.instagramHandle}
-            </p>
-          </Card>
-          <Card className="text-sm text-[var(--ug-muted)]">
-            [PLACEHOLDER_GALLERY_IMAGES]
-          </Card>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Link className={buttonClasses('primary')} to="/how-it-works">
+                Voir le produit
+              </Link>
+              <Link className={buttonClasses('secondary')} to="/contact">
+                Contactez-nous
+              </Link>
+            </div>
+          </div>
         </div>
       </Section>
     </>

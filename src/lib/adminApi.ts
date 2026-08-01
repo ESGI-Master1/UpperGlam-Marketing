@@ -11,6 +11,16 @@ export type AdminReviewStatus =
   | 'submitted'
 export type ServiceMode = 'home' | 'institute'
 
+export type AdminAuditEvent = {
+  action: string
+  adminEmail: string | null
+  adminUserId: number | null
+  createdAt: string
+  details: unknown
+  id: number
+  preRegistrationId: number | null
+}
+
 export type AdminPreRegistration = {
   accountStatus: AdminAccountStatus
   applicant: {
@@ -250,6 +260,39 @@ export async function fetchAdminPreRegistrationById(
   })
 
   return response.data
+}
+
+export async function fetchAdminAuditEvents(
+  token: string,
+  params: {
+    limit: number
+    page: number
+    preRegistrationId?: number
+  }
+) {
+  const query: Record<string, string | number> = {
+    limit: params.limit,
+    page: params.page,
+  }
+
+  if (params.preRegistrationId) {
+    query.preRegistrationId = params.preRegistrationId
+  }
+
+  const response = await requestApi<AdminAuditEvent[]>({
+    path: '/admin/audit-events',
+    query,
+    token,
+  })
+
+  return {
+    data: response.data,
+    meta: response.meta ?? {
+      limit: params.limit,
+      page: params.page,
+      total: response.data.length,
+    },
+  }
 }
 
 export async function approveAdminPreRegistration(

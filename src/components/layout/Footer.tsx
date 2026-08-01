@@ -6,25 +6,26 @@ import { Container } from './Container'
 const footerLinks = [
   { label: 'Contact', to: '/contact' },
   { label: 'FAQ', to: '/faq' },
-  { label: 'Mentions legales', to: '/legal' },
-  { label: 'Politique de confidentialite', to: '/privacy' },
+  { label: 'Mentions légales', to: '/legal' },
+  { label: 'Politique de confidentialité', to: '/privacy' },
   { label: 'CGU', to: '/cgu' },
 ]
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--ug-border)] bg-[var(--ug-footer-bg)] py-10">
+    <footer className="border-t border-white/10 bg-[var(--ug-footer-bg)] py-12 text-white">
       <Container>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-3">
             <p className="text-lg font-semibold">{siteCopy.brand}</p>
-            <p className="text-sm text-[var(--ug-muted)]">
-              Plateforme marketing et acquisition pour la beaute premium.
+            <p className="max-w-sm text-sm leading-relaxed text-white/55">
+              Réserver une prestation beauté avec des informations claires sur
+              le profil, le prix et les disponibilités.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 text-sm text-[var(--ug-muted)] sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 text-sm text-white/55 sm:grid-cols-2">
             <div className="space-y-2">
-              <p className="text-xs font-semibold tracking-[0.1em] text-[var(--ug-text)] uppercase">
+              <p className="text-xs font-semibold tracking-[0.1em] text-white uppercase">
                 Liens
               </p>
               {footerLinks.map((item) => (
@@ -58,11 +59,11 @@ export function Footer() {
                 }}
                 type="button"
               >
-                Gerer mes cookies
+                Gérer mes cookies
               </button>
             </div>
             <div className="space-y-2">
-              <p className="text-xs font-semibold tracking-[0.1em] text-[var(--ug-text)] uppercase">
+              <p className="text-xs font-semibold tracking-[0.1em] text-white uppercase">
                 Reseaux
               </p>
               <a

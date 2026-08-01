@@ -1,0 +1,16 @@
+{
+  "name": "Upper Glam",
+  "short_name": "Upper Glam",
+  "description": "Réserver un professionnel de la beauté selon ses disponibilités.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ef",
+  "theme_color": "#171513",
+  "icons": [
+    {
+      "src": "/brand-mark.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

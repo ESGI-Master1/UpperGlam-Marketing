@@ -7,30 +7,39 @@ export function CGUPage() {
   return (
     <>
       <PageMeta
-        description="Conditions generales d utilisation Upper Glam - regles de la plateforme pour clients et professionnels."
-        title="CGU"
+        description="Conditions générales d’utilisation du service Upper Glam."
+        noIndex
+        title="Conditions générales d’utilisation"
       />
       <Section>
         <div className="space-y-6">
-          <Badge>CGU</Badge>
+          <Badge>Conditions d’utilisation</Badge>
           <Card className="space-y-4 text-sm text-[var(--ug-muted)]">
             <h1 className="text-3xl text-[var(--ug-text)]">
-              Conditions generales d utilisation
+              Conditions générales d’utilisation
             </h1>
             <h2 className="text-xl text-[var(--ug-text)]">1. Objet</h2>
             <p>
-              Contenu placeholder a completer selon le modele economique final.
+              Upper Glam met en relation des clients et des professionnels de la
+              beauté, facilite la consultation des disponibilités et organise le
+              parcours de réservation.
             </p>
             <h2 className="text-xl text-[var(--ug-text)]">
               2. Comptes utilisateurs
             </h2>
-            <p>Contenu placeholder: creation, securite, responsabilites.</p>
+            <p>
+              Chaque utilisateur fournit des informations exactes, protège ses
+              identifiants et signale rapidement toute utilisation non autorisée
+              de son compte.
+            </p>
             <h2 className="text-xl text-[var(--ug-text)]">
               3. Prestations et paiement
             </h2>
             <p>
-              Contenu placeholder: conditions de reservation, annulation,
-              litiges.
+              Le détail de la prestation, le créneau, le lieu et le montant sont
+              présentés avant validation. Les conditions propres au
+              professionnel restent consultables dans son profil et le
+              récapitulatif.
             </p>
           </Card>
         </div>

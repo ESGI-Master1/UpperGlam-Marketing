@@ -1,72 +1,89 @@
 import { Link } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
-import { Card } from '../components/ui/Card'
+import { Badge } from '../components/ui/Badge'
 import { Section } from '../components/ui/Section'
 import { buttonClasses } from '../components/ui/buttonClasses'
 import { trackEvent } from '../lib/analytics'
 
-const proBenefits = [
-  'Fini les imprevus: Upper Glam aide a remplir les creneaux libres rapidement.',
-  'Trouve des client(e)s qualifie(e)s qui recherchent ton expertise.',
-  'Valorise ton talent avec photos, avis verifies et profil transparent.',
-]
-
-const itIsNot = [
-  'Ce n est pas une simple vitrine: c est un levier pour optimiser ton planning.',
-  'Ce n est pas reserve a un seul metier: toute la beaute est concernee.',
-  'Ce n est pas une promesse floue: c est un outil concret pour gagner en visibilite.',
+const benefits = [
+  {
+    title: 'Présenter son savoir-faire',
+    text: 'Un profil structuré réunit spécialités, réalisations, lieux et tarifs.',
+  },
+  {
+    title: 'Piloter ses disponibilités',
+    text: 'L’agenda distingue créneaux libres, rendez-vous et fermetures exceptionnelles.',
+  },
+  {
+    title: 'Centraliser les demandes',
+    text: 'Chaque réservation conserve son statut et les informations nécessaires au suivi.',
+  },
 ]
 
 export function ProPage() {
   return (
     <>
       <PageMeta
-        description="Upper Glam aide les professionnels beaute a gagner en visibilite et en conversions de qualite."
-        title="Professionnel(le)"
+        description="Présentez vos prestations beauté, gérez vos disponibilités et centralisez vos réservations avec Upper Glam."
+        title="Agenda et réservations pour professionnels de la beauté"
       />
+      <Section className="pt-14 sm:pt-20">
+        <div className="max-w-4xl space-y-7">
+          <Badge>Espace professionnel</Badge>
+          <h1 className="text-5xl leading-tight sm:text-6xl">
+            Transformer sa visibilité en rendez-vous réellement organisés
+          </h1>
+          <p className="max-w-2xl text-xl leading-relaxed text-[var(--ug-muted)]">
+            Upper Glam aide les professionnels de la beauté à présenter leur
+            offre, ouvrir leurs créneaux et suivre les demandes dans un seul
+            espace.
+          </p>
+          <Link
+            className={buttonClasses('primary', 'lg')}
+            onClick={() =>
+              trackEvent('cta_click', {
+                cta: 'pro_signup',
+                funnel_name: 'pre_signup',
+                funnel_step: 'cta_click',
+                location: 'pro_page',
+                target_role: 'provider',
+                to: '/pre-inscription?role=provider',
+              })
+            }
+            to="/pre-inscription?role=provider"
+          >
+            Présenter mon activité
+          </Link>
+        </div>
+      </Section>
+
       <Section>
-        <div className="space-y-8">
-          <div className="space-y-3">
-            <h1 className="text-4xl sm:text-5xl">
-              Avec Upper Glam, simplifie ton quotidien et developpe ton
-              activite.
-            </h1>
-            <p className="max-w-2xl leading-relaxed text-[var(--ug-muted)]">
-              Rejoins Upper Glam et laisse-nous t accompagner pour optimiser ton
-              planning tout en augmentant ta visibilite.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {proBenefits.map((benefit) => (
-              <Card key={benefit}>
-                <p className="text-sm">{benefit}</p>
-              </Card>
-            ))}
-          </div>
-          <Card className="space-y-6">
-            <h2 className="text-2xl">Ce que ce n est pas</h2>
-            <ul className="space-y-2 text-sm leading-relaxed text-[var(--ug-muted)]">
-              {itIsNot.map((item) => (
-                <li key={item}>- {item}</li>
-              ))}
-            </ul>
-            <Link
-              className={buttonClasses('primary')}
-              onClick={() =>
-                trackEvent('cta_click', {
-                  cta: 'pro_signup',
-                  funnel_name: 'pre_signup',
-                  funnel_step: 'cta_click',
-                  location: 'pro_page',
-                  target_role: 'provider',
-                  to: '/pre-inscription',
-                })
-              }
-              to="/pre-inscription"
-            >
-              Je me pre-inscris en tant que pro
-            </Link>
-          </Card>
+        <div className="grid gap-8 border-t border-[var(--ug-border)] pt-10 md:grid-cols-3">
+          {benefits.map((benefit, index) => (
+            <article className="process-step" key={benefit.title}>
+              <span className="text-sm text-[var(--ug-accent)]">
+                0{index + 1}
+              </span>
+              <h2 className="mt-5 text-2xl">{benefit.title}</h2>
+              <p className="mt-3 leading-relaxed text-[var(--ug-muted)]">
+                {benefit.text}
+              </p>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <Section className="pb-24">
+        <div className="final-cta">
+          <Badge>Conçu pour le terrain</Badge>
+          <h2>
+            Un outil de réservation, pas une vitrine supplémentaire à maintenir.
+          </h2>
+          <p>
+            Upper Glam réunit l’agenda, les règles de disponibilité et le
+            traitement des demandes pour garder une activité claire et
+            organisée.
+          </p>
         </div>
       </Section>
     </>
