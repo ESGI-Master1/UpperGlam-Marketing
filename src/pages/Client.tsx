@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
+import { AppMockup } from '../components/marketing/AppMockup'
 import { Badge } from '../components/ui/Badge'
 import { Section } from '../components/ui/Section'
 import { buttonClasses } from '../components/ui/buttonClasses'
@@ -28,31 +29,34 @@ export function ClientPage() {
         title="Trouver et réserver une prestation beauté"
       />
       <Section className="pt-14 sm:pt-20">
-        <div className="max-w-4xl space-y-7">
-          <Badge>Parcours client</Badge>
-          <h1 className="text-5xl leading-tight sm:text-6xl">
-            Trouver un professionnel disponible, sans multiplier les messages
-          </h1>
-          <p className="max-w-2xl text-xl leading-relaxed text-[var(--ug-muted)]">
-            Upper Glam transforme une recherche beauté en réservation
-            structurée, avec les informations utiles au même endroit.
-          </p>
-          <Link
-            className={buttonClasses('primary', 'lg')}
-            onClick={() =>
-              trackEvent('cta_click', {
-                cta: 'client_signup',
-                funnel_name: 'pre_signup',
-                funnel_step: 'cta_click',
-                location: 'client_page',
-                target_role: 'user',
-                to: '/pre-inscription?role=user',
-              })
-            }
-            to="/pre-inscription?role=user"
-          >
-            Créer mon profil client
-          </Link>
+        <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-7">
+            <Badge>Parcours client</Badge>
+            <h1 className="text-5xl leading-tight sm:text-6xl">
+              Trouver un professionnel disponible, sans multiplier les messages
+            </h1>
+            <p className="max-w-2xl text-xl leading-relaxed text-[var(--ug-muted)]">
+              Upper Glam transforme une recherche beauté en réservation
+              structurée, avec les informations utiles au même endroit.
+            </p>
+            <Link
+              className={buttonClasses('primary', 'lg')}
+              onClick={() =>
+                trackEvent('cta_click', {
+                  cta: 'client_signup',
+                  funnel_name: 'pre_signup',
+                  funnel_step: 'cta_click',
+                  location: 'client_page',
+                  target_role: 'user',
+                  to: '/pre-inscription?role=user',
+                })
+              }
+              to="/pre-inscription?role=user"
+            >
+              Créer mon profil client
+            </Link>
+          </div>
+          <AppMockup compact />
         </div>
       </Section>
 

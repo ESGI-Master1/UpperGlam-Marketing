@@ -26,6 +26,7 @@
 body {
   margin: 0;
   min-width: 320px;
+  overflow-x: hidden;
   background:
     radial-gradient(
       900px circle at 85% -10%,
@@ -147,12 +148,18 @@ a {
   display: flex;
   flex-direction: column;
   margin: 0;
-  min-height: 610px;
+  min-height: 650px;
+  min-width: 0;
   position: relative;
+  width: 100%;
+}
+
+.hero-section .grid > * {
+  min-width: 0;
 }
 
 .app-mockup--compact {
-  min-height: 560px;
+  min-height: 600px;
 }
 
 .app-mockup__halo {
@@ -161,43 +168,107 @@ a {
     rgba(201, 164, 93, 0.32),
     transparent 68%
   );
-  height: 430px;
+  height: 520px;
   left: 50%;
   position: absolute;
   top: 45%;
   transform: translate(-50%, -50%);
-  width: 430px;
+  width: 520px;
+}
+
+.app-mockup__stage {
+  height: 590px;
+  max-width: 660px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
 }
 
 .app-mockup__phone {
   background: #090909;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 42px;
+  border-radius: 38px;
   box-shadow: 0 38px 80px rgba(0, 0, 0, 0.32);
-  max-width: 292px;
   overflow: hidden;
-  padding: 10px;
-  position: relative;
-  width: min(72vw, 292px);
+  padding: 8px;
+  position: absolute;
+  transition:
+    transform 260ms ease,
+    filter 260ms ease;
+  width: min(42vw, 245px);
 }
 
-.app-mockup__speaker {
+.app-mockup__phone::after {
   background: #050505;
-  border-radius: 0 0 12px 12px;
-  height: 16px;
+  border-radius: 0 0 10px 10px;
+  content: '';
+  height: 14px;
   left: 50%;
   position: absolute;
-  top: 8px;
+  top: 7px;
   transform: translateX(-50%);
-  width: 92px;
+  width: 76px;
   z-index: 2;
 }
 
+.app-mockup__phone--left {
+  filter: brightness(0.72);
+  left: 2%;
+  top: 72px;
+  transform: rotate(-8deg) scale(0.86);
+}
+
+.app-mockup__phone--main {
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.app-mockup__phone--right {
+  filter: brightness(0.72);
+  right: 2%;
+  top: 72px;
+  transform: rotate(8deg) scale(0.86);
+}
+
+.app-mockup__phone:hover {
+  filter: brightness(1);
+}
+
+.app-mockup__phone--left:hover {
+  transform: rotate(-4deg) scale(0.9) translateY(-8px);
+}
+
+.app-mockup__phone--right:hover {
+  transform: rotate(4deg) scale(0.9) translateY(-8px);
+}
+
+.app-mockup__phone--main:hover {
+  transform: translateX(-50%) translateY(-8px);
+}
+
 .app-mockup__screen {
-  border-radius: 32px;
+  border-radius: 30px;
   display: block;
   height: auto;
   width: 100%;
+}
+
+.app-mockup__label {
+  background: var(--ug-accent);
+  border-radius: 999px;
+  color: #15120d;
+  font-size: 0.65rem;
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: 0.08em;
+  padding: 7px 11px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 22px;
+  transform: translateX(-50%);
+  z-index: 3;
 }
 
 .app-mockup figcaption {
@@ -216,6 +287,28 @@ a {
 .app-mockup figcaption span {
   color: var(--ug-accent);
   padding: 0 5px;
+}
+
+.app-flow-preview {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.app-flow-preview img {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  height: 104px;
+  object-fit: cover;
+  object-position: top;
+  width: 48px;
+}
+
+.app-flow-preview span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .service-list {
@@ -318,6 +411,22 @@ a {
   .app-mockup--compact {
     min-height: auto;
     padding: 20px 0 34px;
+  }
+
+  .app-mockup__stage {
+    height: 500px;
+  }
+
+  .app-mockup__phone {
+    width: min(55vw, 210px);
+  }
+
+  .app-mockup__phone--left {
+    left: -6%;
+  }
+
+  .app-mockup__phone--right {
+    right: -6%;
   }
 
   .service-list span {
