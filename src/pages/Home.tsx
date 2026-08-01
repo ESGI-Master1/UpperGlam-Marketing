@@ -117,14 +117,25 @@ export function Home() {
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr]">
           <AppMockup />
           <div className="space-y-6">
-            <Badge>L’application en conditions réelles</Badge>
+            <Badge>Le parcours en conditions réelles</Badge>
             <h2 className="text-4xl leading-tight sm:text-5xl">
-              Une interface sombre, lisible et centrée sur l’action
+              Du premier coup d’œil au créneau confirmé
             </h2>
             <p className="max-w-xl text-lg leading-relaxed text-white/65">
-              Upper Glam relie recherche, profil, agenda, réservation et
-              paiement dans une expérience pensée pour Android, iOS et le web.
+              Les clientes comparent les profils, découvrent les réalisations et
+              choisissent une disponibilité sans quitter le même parcours, sur
+              Android, iOS et le web.
             </p>
+            <div className="app-flow-preview">
+              <img
+                alt="Démonstration animée du parcours de réservation Upper Glam"
+                height="1067"
+                loading="lazy"
+                src="/media/app/customer-flow.gif"
+                width="480"
+              />
+              <span>12 secondes pour trouver et réserver</span>
+            </div>
             <Link className={buttonClasses('primary', 'lg')} to="/how-it-works">
               Découvrir le parcours
             </Link>
