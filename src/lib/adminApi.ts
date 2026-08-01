@@ -1,6 +1,8 @@
 import { getApiErrorMessage } from '../i18n/apiErrorMessages'
 
-const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND_URL.replace(/\/+$/, '')
+const backendUrl = (
+  import.meta.env.VITE_PUBLIC_BACKEND_URL?.trim() || 'https://api.upperglam.fr'
+).replace(/\/+$/, '')
 
 export type AdminRole = 'provider' | 'user'
 export type AdminAccountStatus = 'active' | 'pending' | 'suspended'

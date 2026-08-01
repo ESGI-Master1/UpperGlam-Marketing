@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url'
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const outputPath = path.join(rootDir, 'src', 'seo', 'catalog.generated.json')
 const apiUrl = (
-  process.env.SEO_API_URL ??
-  process.env.VITE_PUBLIC_BACKEND_URL ??
+  process.env.SEO_API_URL?.trim() ||
+  process.env.VITE_PUBLIC_BACKEND_URL?.trim() ||
   'http://localhost:3333'
 ).replace(/\/+$/, '')
 
