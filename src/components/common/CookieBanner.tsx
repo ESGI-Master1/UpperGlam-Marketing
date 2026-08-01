@@ -46,12 +46,12 @@ export function CookieBanner() {
   }
 
   return (
-    <div className="fixed right-0 bottom-0 left-0 z-40 border-t border-[var(--ug-border)] bg-[color:var(--ug-banner-bg)] py-4">
-      <Container className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+    <div className="fixed right-0 bottom-0 left-0 z-40 border-t border-[var(--ug-border)] bg-[color:var(--ug-banner-bg)] py-3">
+      <Container className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
         <div className="space-y-1">
-          <p className="text-sm text-[var(--ug-muted)]">
+          <p className="text-xs leading-relaxed text-[var(--ug-muted)] sm:text-sm">
             Nous utilisons des cookies essentiels. Le tracking analytique reste
-            desactive tant que vous n'acceptez pas.
+            désactivé tant que vous ne l'acceptez pas.
           </p>
           {!isFirstChoice && (
             <p className="text-xs text-[var(--ug-muted)]">

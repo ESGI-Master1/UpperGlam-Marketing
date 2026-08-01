@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
-import { PostHogProvider } from 'posthog-js/react'
+import type { RouterProviderProps } from 'react-router-dom'
 import { App } from './App'
 import {
   ANALYTICS_CONSENT_CHANGED_EVENT,
   getAnalyticsConsentStatus,
-  posthogOptions,
+  initializeAnalytics,
 } from '../lib/analytics'
 
 type RootAppProps = {
   posthogKey?: string
+  router: RouterProviderProps['router']
 }
 
-export function RootApp({ posthogKey }: RootAppProps) {
-  const [consentStatus, setConsentStatus] = useState(getAnalyticsConsentStatus)
+export function RootApp({ posthogKey, router }: RootAppProps) {
+  const [consentStatus, setConsentStatus] =
+    useState<ReturnType<typeof getAnalyticsConsentStatus>>(null)
 
   useEffect(() => {
     const syncConsent = () => {
@@ -21,6 +23,7 @@ export function RootApp({ posthogKey }: RootAppProps) {
 
     window.addEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, syncConsent)
     window.addEventListener('storage', syncConsent)
+    syncConsent()
 
     return () => {
       window.removeEventListener(ANALYTICS_CONSENT_CHANGED_EVENT, syncConsent)
@@ -28,11 +31,11 @@ export function RootApp({ posthogKey }: RootAppProps) {
     }
   }, [])
 
-  if (!posthogKey || consentStatus !== 'accepted') return <App />
+  useEffect(() => {
+    if (posthogKey && consentStatus === 'accepted') {
+      void initializeAnalytics(posthogKey)
+    }
+  }, [consentStatus, posthogKey])
 
-  return (
-    <PostHogProvider apiKey={posthogKey} options={posthogOptions}>
-      <App />
-    </PostHogProvider>
-  )
+  return <App router={router} />
 }

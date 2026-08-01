@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://upperglam.fr/</loc><lastmod>2026-08-01</lastmod><priority>1.0</priority></url>
-  <url><loc>https://upperglam.fr/how-it-works</loc><lastmod>2026-08-01</lastmod><priority>0.9</priority></url>
-  <url><loc>https://upperglam.fr/client</loc><lastmod>2026-08-01</lastmod><priority>0.8</priority></url>
-  <url><loc>https://upperglam.fr/pro</loc><lastmod>2026-08-01</lastmod><priority>0.8</priority></url>
-  <url><loc>https://upperglam.fr/about</loc><lastmod>2026-08-01</lastmod><priority>0.6</priority></url>
-  <url><loc>https://upperglam.fr/faq</loc><lastmod>2026-08-01</lastmod><priority>0.6</priority></url>
-  <url><loc>https://upperglam.fr/contact</loc><lastmod>2026-08-01</lastmod><priority>0.5</priority></url>
+  <url><loc>https://upperglam.fr/</loc></url>
+  <url><loc>https://upperglam.fr/how-it-works</loc></url>
+  <url><loc>https://upperglam.fr/client</loc></url>
+  <url><loc>https://upperglam.fr/pro</loc></url>
+  <url><loc>https://upperglam.fr/about</loc></url>
+  <url><loc>https://upperglam.fr/faq</loc></url>
+  <url><loc>https://upperglam.fr/contact</loc></url>
+  <url><loc>https://upperglam.fr/confiance</loc></url>
 </urlset>

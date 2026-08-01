@@ -1,0 +1,29 @@
+# Upper Glam
+
+> Upper Glam est une plateforme française de mise en relation et de réservation entre clients et professionnels de la beauté. Elle permet de découvrir des profils, comparer des prestations, consulter les prix et disponibilités, puis réserver un rendez-vous.
+
+## Services principaux
+
+- [Prestations beauté](https://upperglam.fr/prestations): Catégories qui disposent de professionnels et de créneaux réellement réservables.
+- [Professionnels disponibles](https://upperglam.fr/professionnels): Profils publics avec prestations, tarifs, zones et disponibilités.
+- [Villes couvertes](https://upperglam.fr/villes): Pages locales publiées uniquement lorsque l'offre est suffisante.
+- [Réserver une prestation beauté](https://upperglam.fr/client): Rechercher et comparer des professionnels selon la prestation, la zone, le prix et la disponibilité.
+- [Espace professionnels de la beauté](https://upperglam.fr/pro): Présenter ses prestations, gérer ses disponibilités et centraliser ses réservations.
+- [Comment fonctionne Upper Glam](https://upperglam.fr/how-it-works): Comprendre les étapes de recherche, de comparaison et de réservation.
+
+## Informations sur Upper Glam
+
+- [À propos](https://upperglam.fr/about): Mission et vision de la plateforme.
+- [Questions fréquentes](https://upperglam.fr/faq): Réponses sur les profils, réservations et paiements.
+- [Contact](https://upperglam.fr/contact): Contacter l'équipe Upper Glam.
+- [Confiance et sécurité](https://upperglam.fr/confiance): Méthode d'activation des profils, avis, disponibilités et sécurité.
+
+## Confiance et règles
+
+- [Politique de confidentialité](https://upperglam.fr/privacy): Traitement des données personnelles et droits des utilisateurs.
+- [Conditions générales d'utilisation](https://upperglam.fr/cgu): Conditions d'accès et d'utilisation du service.
+- [Mentions légales](https://upperglam.fr/legal): Informations sur l'éditeur et l'hébergement.
+
+## Optional
+
+- [Instagram Upper Glam](https://instagram.com/upper_glam): Compte social officiel de la marque.

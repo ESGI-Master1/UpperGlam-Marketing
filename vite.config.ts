@@ -3,15 +3,17 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   build: {
     rollupOptions: {
-      output: {
-        manualChunks: {
-          analytics: ['posthog-js'],
-          react: ['react', 'react-dom', 'react-router-dom'],
-        },
-      },
+      output: isSsrBuild
+        ? undefined
+        : {
+            manualChunks: {
+              analytics: ['posthog-js'],
+              react: ['react', 'react-dom', 'react-router-dom'],
+            },
+          },
     },
   },
   plugins: [
@@ -31,4 +33,4 @@ export default defineConfig({
     restoreMocks: true,
     setupFiles: ['./src/test/setup.ts'],
   },
-})
+}))

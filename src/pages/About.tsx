@@ -16,7 +16,8 @@ export function AboutPage() {
           <div className="space-y-6">
             <Badge>À propos</Badge>
             <h1 className="text-5xl leading-tight sm:text-6xl">
-              Rendre la disponibilité aussi visible que le talent
+              Upper Glam rend les professionnels de beauté plus faciles à
+              réserver
             </h1>
           </div>
           <p className="text-xl leading-relaxed text-[var(--ug-muted)]">
@@ -59,7 +60,7 @@ export function AboutPage() {
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <Link className={buttonClasses('primary')} to="/how-it-works">
-                Voir le produit
+                Comprendre la réservation Upper Glam
               </Link>
               <Link className={buttonClasses('secondary')} to="/contact">
                 Contactez-nous

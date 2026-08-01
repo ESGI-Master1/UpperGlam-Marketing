@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { PageMeta } from '../components/common/PageMeta'
 import { AppMockup } from '../components/marketing/AppMockup'
+import { LazyVideo } from '../components/marketing/LazyVideo'
 import { UsageVoices } from '../components/marketing/UsageVoices'
 import { Accordion } from '../components/ui/Accordion'
 import { Badge } from '../components/ui/Badge'
@@ -127,17 +128,17 @@ export function Home() {
               Android, iOS et le web.
             </p>
             <div className="app-flow-preview">
-              <img
-                alt="Démonstration animée du parcours de réservation Upper Glam"
-                height="1067"
-                loading="lazy"
-                src="/media/app/customer-flow.gif"
-                width="480"
+              <LazyVideo
+                ariaLabel="Démonstration animée du parcours de réservation Upper Glam"
+                height={1067}
+                poster="/media/app/welcome-final.png"
+                src="/media/app/customer-flow.webm"
+                width={480}
               />
               <span>12 secondes pour trouver et réserver</span>
             </div>
             <Link className={buttonClasses('primary', 'lg')} to="/how-it-works">
-              Découvrir le parcours
+              Comprendre les étapes de réservation
             </Link>
           </div>
         </div>
@@ -155,6 +156,12 @@ export function Home() {
             {services.map((service) => (
               <span key={service}>{service}</span>
             ))}
+            <Link
+              className={buttonClasses('secondary', 'md', 'mt-4')}
+              to="/prestations"
+            >
+              Comparer les prestations réservables
+            </Link>
           </div>
         </div>
       </Section>

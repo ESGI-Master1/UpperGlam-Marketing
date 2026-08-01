@@ -1,4 +1,3 @@
-import posthog from 'posthog-js'
 import type { PostHogConfig } from 'posthog-js'
 
 export const posthogOptions: Partial<PostHogConfig> = {
@@ -34,6 +33,27 @@ const UTM_KEYS = [
 
 type AnalyticsPropertyValue = string | number | boolean | null | undefined
 type AnalyticsProperties = Record<string, AnalyticsPropertyValue>
+type PostHog = (typeof import('posthog-js'))['default']
+
+let posthogPromise: Promise<PostHog> | null = null
+
+export async function initializeAnalytics(apiKey: string): Promise<PostHog> {
+  if (!posthogPromise) {
+    posthogPromise = import('posthog-js').then(({ default: posthog }) => {
+      if (!posthog.__loaded) posthog.init(apiKey, posthogOptions)
+      return posthog
+    })
+  }
+
+  return posthogPromise
+}
+
+async function getPostHog(): Promise<PostHog | null> {
+  const apiKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY
+  if (!apiKey || !hasAnalyticsConsent()) return null
+
+  return initializeAnalytics(apiKey)
+}
 
 export type AnalyticsConsentStatus = 'accepted' | 'refused'
 
@@ -144,9 +164,11 @@ export function trackEvent(
 ) {
   if (!hasAnalyticsConsent()) return
 
-  posthog.capture(event, {
-    ...getAnalyticsContextProperties(),
-    ...properties,
+  void getPostHog().then((posthog) => {
+    posthog?.capture(event, {
+      ...getAnalyticsContextProperties(),
+      ...properties,
+    })
   })
 }
 
@@ -158,6 +180,8 @@ export function trackPageView(properties: AnalyticsProperties) {
     ...properties,
   }
 
-  posthog.capture('$pageview', pageViewProperties)
-  posthog.capture('page_view', pageViewProperties)
+  void getPostHog().then((posthog) => {
+    posthog?.capture('$pageview', pageViewProperties)
+    posthog?.capture('page_view', pageViewProperties)
+  })
 }

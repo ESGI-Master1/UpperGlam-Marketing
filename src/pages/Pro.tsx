@@ -25,7 +25,7 @@ export function ProPage() {
     <>
       <PageMeta
         description="Présentez vos prestations beauté, gérez vos disponibilités et centralisez vos réservations avec Upper Glam."
-        title="Agenda et réservations pour professionnels de la beauté"
+        title="Réservations pour professionnels de la beauté"
       />
       <Section className="pt-14 sm:pt-20">
         <div className="max-w-4xl space-y-7">
@@ -38,22 +38,27 @@ export function ProPage() {
             offre, ouvrir leurs créneaux et suivre les demandes dans un seul
             espace.
           </p>
-          <Link
-            className={buttonClasses('primary', 'lg')}
-            onClick={() =>
-              trackEvent('cta_click', {
-                cta: 'pro_signup',
-                funnel_name: 'pre_signup',
-                funnel_step: 'cta_click',
-                location: 'pro_page',
-                target_role: 'provider',
-                to: '/pre-inscription?role=provider',
-              })
-            }
-            to="/pre-inscription?role=provider"
-          >
-            Présenter mon activité
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              className={buttonClasses('primary', 'lg')}
+              onClick={() =>
+                trackEvent('cta_click', {
+                  cta: 'pro_signup',
+                  funnel_name: 'pre_signup',
+                  funnel_step: 'cta_click',
+                  location: 'pro_page',
+                  target_role: 'provider',
+                  to: '/pre-inscription?role=provider',
+                })
+              }
+              to="/pre-inscription?role=provider"
+            >
+              Présenter mon activité
+            </Link>
+            <Link className={buttonClasses('secondary', 'lg')} to="/confiance">
+              Lire la méthode de validation des profils
+            </Link>
+          </div>
         </div>
       </Section>
 

@@ -1,5 +1,17 @@
+# Upper Glam — politique d'exploration publique
+# /admin/ reste protégé par authentification et autorisation côté serveur.
+
 User-agent: *
 Allow: /
 Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
 
 Sitemap: https://upperglam.fr/sitemap.xml

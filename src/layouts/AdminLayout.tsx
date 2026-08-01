@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import posthog from 'posthog-js'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   clearAdminSession,
@@ -33,17 +32,21 @@ export function AdminLayout() {
     )
     const previousRobots = robots?.content
     robots?.setAttribute('content', 'noindex, nofollow')
-    posthog.set_config({
-      autocapture: false,
-      capture_pageleave: false,
-      capture_pageview: false,
+    void import('posthog-js').then(({ default: posthog }) => {
+      posthog.set_config({
+        autocapture: false,
+        capture_pageleave: false,
+        capture_pageview: false,
+      })
     })
     return () => {
       if (robots && previousRobots) robots.content = previousRobots
-      posthog.set_config({
-        autocapture: posthogOptions.autocapture ?? true,
-        capture_pageleave: posthogOptions.capture_pageleave ?? true,
-        capture_pageview: posthogOptions.capture_pageview ?? false,
+      void import('posthog-js').then(({ default: posthog }) => {
+        posthog.set_config({
+          autocapture: posthogOptions.autocapture ?? true,
+          capture_pageleave: posthogOptions.capture_pageleave ?? true,
+          capture_pageview: posthogOptions.capture_pageview ?? false,
+        })
       })
     }
   }, [])
