@@ -8,7 +8,7 @@ export const siteCopy = {
 export const homeCopy = {
   hero: {
     eyebrow: 'Réservation beauté, sans messages inutiles',
-    title: 'Le bon talent. Le bon créneau. Une réservation.',
+    title: 'Réservez un professionnel de beauté près de chez vous',
     description:
       'Upper Glam réunit profils, prestations, prix et disponibilités pour réserver un professionnel de la beauté autour de soi.',
     description2:
@@ -28,7 +28,7 @@ export const homeCopy = {
         'Consultez les réalisations, les spécialités, les prix et les avis disponibles.',
     },
     {
-      title: '3. Reservez sereinement',
+      title: '3. Réservez sereinement',
       description:
         'Choisissez un créneau et confirmez avec un récapitulatif sans ambiguïté.',
     },

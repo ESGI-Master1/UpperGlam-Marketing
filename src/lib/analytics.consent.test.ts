@@ -6,7 +6,9 @@ const { captureMock } = vi.hoisted(() => ({
 
 vi.mock('posthog-js', () => ({
   default: {
+    __loaded: true,
     capture: captureMock,
+    init: vi.fn(),
   },
 }))
 
@@ -23,6 +25,7 @@ describe('analytics consent gating', () => {
   let storage: Record<string, string> = {}
 
   beforeEach(() => {
+    vi.stubEnv('VITE_PUBLIC_POSTHOG_KEY', 'phc_test')
     storage = {}
     const localStorageMock: Storage = {
       getItem: (key: string) => (key in storage ? storage[key] : null),
@@ -65,7 +68,7 @@ describe('analytics consent gating', () => {
     ).toBeNull()
   })
 
-  it('scenario 2: sends analytics after consent is accepted', () => {
+  it('scenario 2: sends analytics after consent is accepted', async () => {
     setAnalyticsConsentStatus('accepted')
 
     trackEvent('cta_click', { location: 'home' })
@@ -75,7 +78,7 @@ describe('analytics consent gating', () => {
       url: 'https://upperglam.fr/pre-inscription?role=client',
     })
 
-    expect(captureMock).toHaveBeenCalledTimes(3)
+    await vi.waitFor(() => expect(captureMock).toHaveBeenCalledTimes(3))
     expect(captureMock).toHaveBeenNthCalledWith(
       1,
       'cta_click',
@@ -93,10 +96,10 @@ describe('analytics consent gating', () => {
     )
   })
 
-  it('scenario 3: stops analytics after consent withdrawal', () => {
+  it('scenario 3: stops analytics after consent withdrawal', async () => {
     setAnalyticsConsentStatus('accepted')
     trackEvent('cta_click', { location: 'header' })
-    expect(captureMock).toHaveBeenCalledTimes(1)
+    await vi.waitFor(() => expect(captureMock).toHaveBeenCalledTimes(1))
 
     setAnalyticsConsentStatus('refused')
     trackEvent('cta_click', { location: 'footer' })
@@ -121,7 +124,7 @@ describe('analytics consent gating', () => {
     expect(filter?.(event)).toBeNull()
   })
 
-  it('adds non-sensitive attribution context to accepted events', () => {
+  it('adds non-sensitive attribution context to accepted events', async () => {
     window.history.replaceState(
       {},
       '',
@@ -134,17 +137,19 @@ describe('analytics consent gating', () => {
       role: 'user',
     })
 
-    expect(captureMock).toHaveBeenCalledWith(
-      'pre_signup_role_selected',
-      expect.objectContaining({
-        current_path: '/pre-inscription',
-        entry_path: '/pre-inscription',
-        funnel_name: 'pre_signup',
-        traffic_source: 'instagram',
-        utm_campaign: 'launch',
-        utm_medium: 'social',
-        utm_source: 'instagram',
-      })
+    await vi.waitFor(() =>
+      expect(captureMock).toHaveBeenCalledWith(
+        'pre_signup_role_selected',
+        expect.objectContaining({
+          current_path: '/pre-inscription',
+          entry_path: '/pre-inscription',
+          funnel_name: 'pre_signup',
+          traffic_source: 'instagram',
+          utm_campaign: 'launch',
+          utm_medium: 'social',
+          utm_source: 'instagram',
+        })
+      )
     )
   })
 

@@ -47,6 +47,7 @@ export function PreSignupPage() {
     <>
       <PageMeta
         description="Créez votre profil Upper Glam en tant que client ou professionnel de la beauté."
+        noindex
         title="Créer mon profil"
       />
       <Section>

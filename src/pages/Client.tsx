@@ -39,22 +39,30 @@ export function ClientPage() {
               Upper Glam transforme une recherche beauté en réservation
               structurée, avec les informations utiles au même endroit.
             </p>
-            <Link
-              className={buttonClasses('primary', 'lg')}
-              onClick={() =>
-                trackEvent('cta_click', {
-                  cta: 'client_signup',
-                  funnel_name: 'pre_signup',
-                  funnel_step: 'cta_click',
-                  location: 'client_page',
-                  target_role: 'user',
-                  to: '/pre-inscription?role=user',
-                })
-              }
-              to="/pre-inscription?role=user"
-            >
-              Créer mon profil client
-            </Link>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                className={buttonClasses('primary', 'lg')}
+                onClick={() =>
+                  trackEvent('cta_click', {
+                    cta: 'client_signup',
+                    funnel_name: 'pre_signup',
+                    funnel_step: 'cta_click',
+                    location: 'client_page',
+                    target_role: 'user',
+                    to: '/pre-inscription?role=user',
+                  })
+                }
+                to="/pre-inscription?role=user"
+              >
+                Créer mon profil client
+              </Link>
+              <Link
+                className={buttonClasses('secondary', 'lg')}
+                to="/professionnels"
+              >
+                Comparer les professionnels disponibles
+              </Link>
+            </div>
           </div>
           <AppMockup compact />
         </div>

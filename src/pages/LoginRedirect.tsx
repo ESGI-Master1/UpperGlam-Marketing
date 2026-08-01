@@ -20,6 +20,7 @@ export function LoginRedirectPage() {
     <>
       <PageMeta
         description="Redirection vers la plateforme de connexion."
+        noindex
         title="Login"
       />
       <Section>

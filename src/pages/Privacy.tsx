@@ -2,146 +2,159 @@ import { PageMeta } from '../components/common/PageMeta'
 import { Badge } from '../components/ui/Badge'
 import { Card } from '../components/ui/Card'
 import { Section } from '../components/ui/Section'
+import { siteCopy } from '../content/copy'
 
 export function PrivacyPage() {
   return (
     <>
       <PageMeta
-        description="Politique de Confidentialite Upper Glam - RGPD, finalites de traitement, conservation et droits utilisateurs."
-        title="Politique de confidentialite"
+        description="Politique de confidentialité Upper Glam : données collectées, finalités, conservation, destinataires et droits RGPD."
+        noindex
+        title="Politique de confidentialité"
       />
       <Section>
         <div className="space-y-6">
-          <Badge>Confidentialite</Badge>
-          <Card className="space-y-3 text-sm leading-relaxed text-[var(--ug-muted)]">
+          <Badge>Confidentialité</Badge>
+          <Card className="space-y-4 text-sm leading-relaxed text-[var(--ug-muted)]">
             <h1 className="text-3xl text-[var(--ug-text)]">
-              Politique de Confidentialite - Upper Glam
+              Politique de confidentialité
             </h1>
-            <p>Derniere mise a jour : 03/04/2025</p>
+            <p>Dernière mise à jour : 1er août 2026.</p>
+
+            <h2 className="text-xl text-[var(--ug-text)]">
+              1. Responsable du traitement
+            </h2>
             <p>
-              Chez Upper Glam, la protection de vos donnees personnelles est une
-              priorite. Nous nous engageons a respecter votre vie privee et a
-              assurer la securite de vos informations conformement au RGPD et
-              aux lois en vigueur.
+              Pauline Lavergne, responsable du projet Upper Glam, détermine les
+              finalités et moyens des traitements décrits ici. Elle est
+              joignable à{' '}
+              <a className="underline" href={`mailto:${siteCopy.email}`}>
+                {siteCopy.email}
+              </a>
+              . Les informations d'immatriculation et l'adresse du siège doivent
+              être complétées avant l'ouverture commerciale.
             </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">
-              1. Qui sommes-nous ?
+              2. Données traitées
             </h2>
             <p>
-              Upper Glam est une application facilitant la mise en relation
-              entre clients et professionnels de la beaute. L'entite responsable
-              du traitement des donnees est Pauline Lavergne, immatriculee sous
-              le numero [Numero SIRET], dont le siege social est situe a
-              [Adresse].
+              Selon votre parcours, Upper Glam traite vos coordonnées, votre
+              rôle client ou professionnel, votre zone, vos besoins, les
+              informations de profil professionnel, les échanges avec le support
+              ainsi que des données techniques de connexion et de sécurité.
+            </p>
+            <p>
+              Les données de paiement seront traitées par un prestataire de
+              paiement sécurisé. Upper Glam n'a pas vocation à conserver les
+              numéros complets de carte bancaire.
             </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">
-              2. Quelles donnees collectons-nous ?
+              3. Finalités et bases légales
+            </h2>
+            <ul className="list-disc space-y-2 pl-5">
+              <li>
+                gérer les pré-inscriptions et demandes : mesures
+                précontractuelles ;
+              </li>
+              <li>
+                fournir les comptes, réservations et paiements : exécution du
+                contrat ;
+              </li>
+              <li>
+                sécuriser le service et prévenir la fraude : intérêt légitime ;
+              </li>
+              <li>
+                respecter les obligations comptables et légales : obligation
+                légale ;
+              </li>
+              <li>
+                mesurer l'audience non essentielle et envoyer des communications
+                commerciales : consentement, révocable à tout moment.
+              </li>
+            </ul>
+
+            <h2 className="text-xl text-[var(--ug-text)]">
+              4. Destinataires et sous-traitants
             </h2>
             <p>
-              Donnees d identification : nom, prenom, adresse e-mail, numero de
-              telephone, photo de profil.
-            </p>
-            <p>
-              Donnees de connexion : adresse IP, type de navigateur, logs de
-              connexion.
-            </p>
-            <p>
-              Donnees de paiement (via des prestataires securises) :
-              informations bancaires pour les transactions.
-            </p>
-            <p>
-              Donnees de navigation : pages visitees, preferences d utilisation.
-            </p>
-            <p>
-              Donnees professionnelles (pour les prestataires) : diplomes,
-              experiences, disponibilites, localisation.
+              Seules les personnes habilitées d'Upper Glam et les prestataires
+              nécessaires à l'hébergement, l'envoi d'e-mails, la mesure
+              d'audience, le stockage et le paiement accèdent aux données, dans
+              la limite de leurs missions. Upper Glam ne vend pas vos données.
             </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">
-              3. Pourquoi collectons-nous ces donnees ?
+              5. Transferts hors Espace économique européen
             </h2>
             <p>
-              Fournir nos services : creation et gestion de comptes, mise en
-              relation, reservations.
-            </p>
-            <p>
-              Personnaliser votre experience : recommandations, preferences.
-            </p>
-            <p>
-              Securiser la plateforme : lutte contre la fraude, confidentialite.
-            </p>
-            <p>
-              Envoyer des communications : notifications de reservation, offres
-              promotionnelles (avec consentement).
-            </p>
-            <p>
-              Respecter nos obligations legales : conservation conforme a la
-              loi.
+              Si un prestataire traite des données hors de l'Espace économique
+              européen, Upper Glam vérifie l'existence d'un mécanisme reconnu,
+              notamment une décision d'adéquation ou des clauses contractuelles
+              types, et met en place les garanties appropriées.
             </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">
-              4. Qui a acces a vos donnees ?
+              6. Durées de conservation
             </h2>
+            <ul className="list-disc space-y-2 pl-5">
+              <li>pré-inscriptions : trois ans après le dernier contact ;</li>
+              <li>
+                compte actif : pendant la relation, puis délais légaux
+                applicables ;
+              </li>
+              <li>facturation et transactions : durée imposée par la loi ;</li>
+              <li>
+                prospection : trois ans après le dernier contact ou jusqu'au
+                retrait ;
+              </li>
+              <li>
+                choix de consentement : durée nécessaire pour prouver ce choix.
+              </li>
+            </ul>
+
+            <h2 className="text-xl text-[var(--ug-text)]">7. Vos droits</h2>
             <p>
-              Vos donnees sont accessibles uniquement aux equipes Upper Glam et
-              a nos prestataires techniques (hebergement, paiement) pour
-              executer le service. Nous ne vendons pas vos donnees.
+              Vous pouvez demander l'accès, la rectification, l'effacement, la
+              limitation, la portabilité ou vous opposer à un traitement. Vous
+              pouvez retirer votre consentement à tout moment, sans remettre en
+              cause les traitements antérieurs.
+            </p>
+            <p>
+              Envoyez votre demande à{' '}
+              <a className="underline" href={`mailto:${siteCopy.email}`}>
+                {siteCopy.email}
+              </a>
+              . Une preuve d'identité peut être demandée uniquement en cas de
+              doute raisonnable. Vous pouvez également déposer une réclamation
+              auprès de la{' '}
+              <a
+                className="underline"
+                href="https://www.cnil.fr/fr/plaintes"
+                rel="noreferrer"
+                target="_blank"
+              >
+                CNIL
+              </a>
+              .
             </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">
-              5. Combien de temps conservons-nous vos donnees ?
-            </h2>
-            <p>Donnees du compte : jusqu a la suppression du compte.</p>
-            <p>Donnees de transaction : 5 ans pour obligations legales.</p>
-            <p>Donnees marketing : jusqu au retrait du consentement.</p>
-
-            <h2 className="text-xl text-[var(--ug-text)]">
-              6. Quels sont vos droits ?
+              8. Cookies et mesure d'audience
             </h2>
             <p>
-              Droit d acces, de rectification, d effacement, d opposition, a la
-              portabilite et a la limitation du traitement.
-            </p>
-            <p>
-              Vous pouvez exercer ces droits en nous contactant a :
-              contact.upperglam@gmail.com
+              Les cookies strictement nécessaires fonctionnent sans
+              consentement. La mesure d'audience reste désactivée tant que vous
+              ne l'acceptez pas. Votre choix peut être modifié via « Gérer mes
+              cookies » dans le pied de page.
             </p>
 
-            <h2 className="text-xl text-[var(--ug-text)]">
-              7. Comment securisons-nous vos donnees ?
-            </h2>
+            <h2 className="text-xl text-[var(--ug-text)]">9. Sécurité</h2>
             <p>
-              Nous mettons en place des mesures techniques et organisationnelles
-              strictes : chiffrement, acces restreint, audits de securite.
-            </p>
-
-            <h2 className="text-xl text-[var(--ug-text)]">
-              8. Cookies et technologies similaires
-            </h2>
-            <p>
-              Nous utilisons des cookies pour ameliorer votre experience. Vous
-              pouvez gerer vos preferences dans les parametres de votre
-              navigateur.
-            </p>
-
-            <h2 className="text-xl text-[var(--ug-text)]">
-              9. Modifications de la politique
-            </h2>
-            <p>
-              Nous pouvons modifier cette politique pour nous conformer aux
-              evolutions legales ou ameliorer nos services.
-            </p>
-
-            <h2 className="text-xl text-[var(--ug-text)]">10. Contact</h2>
-            <p>
-              Pour toute question concernant vos donnees personnelles :
-              contact.upperglam@gmail.com
-            </p>
-            <p>
-              En utilisant Upper Glam, vous acceptez cette politique de
-              confidentialite. Merci de votre confiance.
+              Upper Glam applique des mesures proportionnées aux risques : accès
+              restreints, chiffrement des échanges, journalisation, sauvegardes
+              et contrôle des droits administrateurs.
             </p>
           </Card>
         </div>

@@ -8,18 +8,19 @@ export function NotFoundPage() {
   return (
     <>
       <PageMeta
-        description="La page demandee est introuvable."
+        description="La page demandée est introuvable."
+        noindex
         title="Page introuvable"
       />
       <Section>
         <Card className="space-y-4 text-center">
           <h1 className="text-4xl">404</h1>
           <p className="text-sm text-[var(--ug-muted)]">
-            Cette page n existe pas ou a ete deplacee.
+            Cette page n'existe pas ou a été déplacée.
           </p>
           <div>
             <Link className={buttonClasses('primary')} to="/">
-              Retour a l'accueil
+              Retour à l'accueil
             </Link>
           </div>
         </Card>

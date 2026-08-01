@@ -39,6 +39,9 @@ describe('ContactPage critical flow', () => {
       form_name: 'contact',
       role: 'pro',
     })
-    expect(screen.getByText(/Message bien reçu/i)).toBeInTheDocument()
+    expect(screen.getByText(/Votre message est prêt/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: /Ouvrir ma messagerie/i })
+    ).toHaveAttribute('href', expect.stringContaining('mailto:'))
   })
 })

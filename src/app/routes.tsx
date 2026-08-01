@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { Navigate, type RouteObject } from 'react-router-dom'
 import { AdminRequireAuth } from '../components/admin/AdminRequireAuth'
 import { AdminLayout } from '../layouts/AdminLayout'
 import { MainLayout } from '../layouts/MainLayout'
@@ -16,13 +16,23 @@ import { NotFoundPage } from '../pages/NotFound'
 import { PrivacyPage } from '../pages/Privacy'
 import { PreSignupPage } from '../pages/PreSignup'
 import { ProPage } from '../pages/Pro'
+import {
+  CitiesDirectoryPage,
+  CityPage,
+  LocalServicePage,
+  ProviderProfilePage,
+  ProvidersDirectoryPage,
+  ServicePage,
+  ServicesDirectoryPage,
+  TrustPage,
+} from '../pages/SeoMarketplace'
 import { AdminLoginPage } from '../pages/admin/AdminLogin'
 import { AdminPreRegistrationsPage } from '../pages/admin/AdminPreRegistrations'
 import { AdminDashboardPage } from '../pages/admin/AdminDashboard'
 import { AdminProvidersPage } from '../pages/admin/AdminProviders'
 import { AdminUsersPage } from '../pages/admin/AdminUsers'
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
     path: '/admin',
     element: <AdminLayout />,
@@ -72,6 +82,17 @@ export const router = createBrowserRouter([
       { path: 'about', element: <AboutPage /> },
       { path: 'faq', element: <FAQPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'prestations', element: <ServicesDirectoryPage /> },
+      { path: 'prestations/:categorySlug', element: <ServicePage /> },
+      { path: 'villes', element: <CitiesDirectoryPage /> },
+      { path: 'villes/:citySlug', element: <CityPage /> },
+      { path: 'professionnels', element: <ProvidersDirectoryPage /> },
+      {
+        path: 'professionnels/:providerSlug',
+        element: <ProviderProfilePage />,
+      },
+      { path: 'confiance', element: <TrustPage /> },
+      { path: ':citySlug/:categorySlug', element: <LocalServicePage /> },
       { path: 'pre-inscription', element: <PreSignupPage /> },
       {
         path: 'pre-inscription/client',
@@ -88,4 +109,4 @@ export const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage /> },
     ],
   },
-])
+]
