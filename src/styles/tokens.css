@@ -1,19 +1,21 @@
 :root {
-  --ug-bg: #ffffff;
-  --ug-bg-light: #ffffff;
-  --ug-surface: #f8f8f7;
-  --ug-surface-soft: #f2f2f1;
-  --ug-text: #121212;
-  --ug-text-dark: #121212;
-  --ug-muted: #5f5f5f;
-  --ug-border: rgba(16, 16, 16, 0.14);
-  --ug-card-bg: rgba(255, 255, 255, 0.9);
-  --ug-header-bg: rgba(255, 255, 255, 0.88);
-  --ug-footer-bg: #f8f8f7;
-  --ug-banner-bg: rgba(248, 248, 247, 0.98);
-  --ug-input-bg: rgba(255, 255, 255, 0.95);
-  --ug-accent: #d6b36a;
-  --ug-accent-hover: #e2c27d;
-  --ug-container: 1120px;
-  --ug-radius: 16px;
+  --ug-bg: #f7f4ef;
+  --ug-bg-light: #fffdf9;
+  --ug-surface: #efe9df;
+  --ug-surface-soft: #e9e1d5;
+  --ug-text: #171513;
+  --ug-text-dark: #171513;
+  --ug-muted: #69635d;
+  --ug-border: rgba(35, 29, 24, 0.14);
+  --ug-card-bg: rgba(255, 253, 249, 0.86);
+  --ug-header-bg: rgba(247, 244, 239, 0.9);
+  --ug-footer-bg: #1a1816;
+  --ug-banner-bg: rgba(255, 253, 249, 0.98);
+  --ug-input-bg: rgba(255, 253, 249, 0.96);
+  --ug-accent: #c9a45d;
+  --ug-accent-hover: #d9b86f;
+  --ug-ink: #131211;
+  --ug-container: 1180px;
+  --ug-radius: 18px;
+  --ug-radius-lg: 28px;
 }

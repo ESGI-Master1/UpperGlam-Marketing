@@ -19,6 +19,12 @@ export function AdminLayout() {
   const onLoginPage = location.pathname === '/admin/login'
 
   useEffect(() => {
+    const robots = document.head.querySelector<HTMLMetaElement>(
+      'meta[name="robots"]'
+    )
+    const previousRobots = robots?.content
+    robots?.setAttribute('content', 'noindex, nofollow')
+
     posthog.set_config({
       autocapture: false,
       capture_pageleave: false,
@@ -26,6 +32,9 @@ export function AdminLayout() {
     })
 
     return () => {
+      if (robots && previousRobots) {
+        robots.content = previousRobots
+      }
       posthog.set_config({
         autocapture: posthogOptions.autocapture ?? true,
         capture_pageleave: posthogOptions.capture_pageleave ?? true,

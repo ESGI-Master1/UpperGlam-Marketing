@@ -41,7 +41,7 @@ describe('PreSignupPage', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: /liste d attente Client/i })
+      screen.getByRole('heading', { name: /profil client/i })
     ).toBeInTheDocument()
   })
 
@@ -65,13 +65,13 @@ describe('PreSignupPage', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: /liste d attente Pro/i })
+      screen.getByRole('heading', { name: /profil professionnel/i })
     ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /particulier/i }))
 
     expect(
-      screen.getByRole('heading', { name: /liste d attente Client/i })
+      screen.getByRole('heading', { name: /profil client/i })
     ).toBeInTheDocument()
     expect(screen.getByTestId('location')).toHaveTextContent('role=user')
   })

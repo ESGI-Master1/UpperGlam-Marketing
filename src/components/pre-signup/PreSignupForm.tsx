@@ -205,7 +205,7 @@ export function PreSignupForm({
         source: 'marketing_website',
       })
       form.reset()
-      setSuccessMessage('Pre-inscription envoyee avec succes.')
+      setSuccessMessage('Votre profil a bien été enregistré.')
     } catch {
       trackEvent('form_submit_error', {
         error_type: 'api_or_network',
@@ -222,7 +222,7 @@ export function PreSignupForm({
   return (
     <Card className="space-y-5">
       <div className="space-y-3">
-        <Badge>Pre-inscription</Badge>
+        <Badge>Votre profil</Badge>
         <h1 className="text-4xl sm:text-5xl">{title}</h1>
         <p className="text-sm leading-relaxed text-(--ug-muted)">{intro}</p>
         <p className="text-xs text-(--ug-muted)">
@@ -413,7 +413,7 @@ export function PreSignupForm({
         <label className="flex items-start gap-3 rounded-xl border border-(--ug-border) bg-(--ug-surface) p-3 text-sm text-(--ug-muted)">
           <input className="mt-1" name="marketingOptIn" type="checkbox" />
           <span className="leading-relaxed">
-            Je souhaite recevoir les informations de lancement Upper Glam.
+            Je souhaite recevoir les actualités et conseils Upper Glam.
           </span>
         </label>
 

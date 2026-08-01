@@ -7,36 +7,34 @@ export const siteCopy = {
 
 export const homeCopy = {
   hero: {
-    eyebrow: 'Nouvelle experience beaute',
-    title: "Parce que la beaute n'attend pas.",
+    eyebrow: 'Réservation beauté, sans messages inutiles',
+    title: 'Le bon talent. Le bon créneau. Une réservation.',
     description:
-      "Plus besoin de planifier des semaines a l'avance. En 3 clics, tu accedes aux meilleur(e)s expert(e)s disponibles autour de toi.",
+      'Upper Glam réunit profils, prestations, prix et disponibilités pour réserver un professionnel de la beauté autour de soi.',
     description2:
-      'La plateforme qui va revolutionner la beaute en connectant des professionnel(le)s a leurs futur(e)s client(e)s.',
+      'Comparez les expertises, choisissez un créneau et confirmez votre rendez-vous dans un parcours clair.',
     description3:
-      'Inscris-toi des maintenant pour etre parmi les premier(ere)s a decouvrir une nouvelle experience beaute exclusive.',
-    videoUrl:
-      'https://drive.google.com/drive/u/1/folders/15xNwaFXNkX-2BnX7Qf480orMe9Z4CbZ2',
+      'Créez votre profil pour trouver ou proposer des prestations beauté en toute simplicité.',
   },
   howItWorks: [
     {
-      title: '1. Choisissez votre besoin',
+      title: '1. Précisez votre besoin',
       description:
-        'Selectionnez votre prestation, votre zone et votre disponibilite en moins de deux minutes.',
+        'Sélectionnez une prestation, une zone et le moment qui vous convient.',
     },
     {
       title: '2. Comparez les profils',
       description:
-        'Consultez portfolios, avis et specialites pour choisir la bonne personne.',
+        'Consultez les réalisations, les spécialités, les prix et les avis disponibles.',
     },
     {
       title: '3. Reservez sereinement',
       description:
-        'Confirmez votre rendez-vous avec un recapitulatif clair et des etapes simples.',
+        'Choisissez un créneau et confirmez avec un récapitulatif sans ambiguïté.',
     },
   ],
   clientBlock:
-    'Decouvrez des experts adaptes a vos attentes, pour un rendu fiable et elegant.',
+    'Trouvez un professionnel selon la prestation, la localisation et le créneau recherchés.',
   proBlock:
-    'Developpez votre activite, recevez des demandes qualifiees et valorisez votre savoir-faire.',
+    'Présentez votre savoir-faire, organisez vos disponibilités et centralisez les réservations.',
 }
