@@ -11,6 +11,59 @@ export type AdminReviewStatus =
   | 'submitted'
 export type ServiceMode = 'home' | 'institute'
 
+export type AdminDashboard = {
+  bookings: { cancelled: number; paid: number; total: number }
+  pendingPreRegistrations: number
+  providers: number
+  recentRegistrations: Array<{
+    createdAt: string
+    email: string
+    firstName: string | null
+    id: number
+    lastName: string | null
+    status: AdminAccountStatus
+  }>
+  revenueCents: number
+  users: number
+}
+
+export type AdminUser = {
+  bookingsCount: number
+  createdAt: string
+  email: string
+  firstName: string | null
+  id: number
+  lastName: string | null
+  phone: string | null
+  reviewsCount: number
+  spentCents: number
+  status: AdminAccountStatus
+}
+
+export type AdminProvider = {
+  bio: string | null
+  bookingsCount: number
+  city: string
+  createdAt: string
+  currency: string
+  displayName: string
+  email: string
+  firstName: string | null
+  id: number
+  instituteAddress: string | null
+  isFeatured: boolean
+  lastName: string | null
+  phone: string | null
+  priceFromCents: number | null
+  ratingAvg: number
+  ratingCount: number
+  revenueCents: number
+  serviceModes: ServiceMode[]
+  servicesCount: number
+  status: AdminAccountStatus
+  userId: number
+}
+
 export type AdminAuditEvent = {
   action: string
   adminEmail: string | null
@@ -135,7 +188,7 @@ async function requestApi<TData>({
   token,
 }: {
   body?: unknown
-  method?: 'GET' | 'POST'
+  method?: 'GET' | 'PATCH' | 'POST'
   path: string
   query?: Record<string, string | number>
   token?: string
@@ -198,9 +251,92 @@ export async function loginAdmin(email: string, password: string) {
 }
 
 export async function assertAdminAccess(token: string) {
-  await requestApi<AdminPreRegistration[]>({
-    path: '/admin/pre-registrations',
-    query: { limit: 1, page: 1 },
+  await requestApi<AdminDashboard>({ path: '/admin/dashboard', token })
+}
+
+export async function fetchAdminDashboard(token: string) {
+  return (await requestApi<AdminDashboard>({ path: '/admin/dashboard', token }))
+    .data
+}
+
+function buildManagementQuery(params: {
+  featured?: boolean
+  limit: number
+  page: number
+  search?: string
+  status?: AdminAccountStatus
+}) {
+  const query: Record<string, string | number> = {
+    limit: params.limit,
+    page: params.page,
+  }
+  if (params.search) query.search = params.search
+  if (params.status) query.status = params.status
+  if (params.featured !== undefined) query.featured = String(params.featured)
+  return query
+}
+
+export async function fetchAdminUsers(
+  token: string,
+  params: {
+    limit: number
+    page: number
+    search?: string
+    status?: AdminAccountStatus
+  }
+) {
+  const response = await requestApi<AdminUser[]>({
+    path: '/admin/users',
+    query: buildManagementQuery(params),
+    token,
+  })
+  return { data: response.data, meta: response.meta! }
+}
+
+export async function updateAdminUserStatus(
+  token: string,
+  userId: number,
+  status: AdminAccountStatus
+) {
+  return requestApi<{ id: number; status: AdminAccountStatus }>({
+    body: { status },
+    method: 'PATCH',
+    path: `/admin/users/${userId}/status`,
+    token,
+  })
+}
+
+export async function fetchAdminProviders(
+  token: string,
+  params: {
+    featured?: boolean
+    limit: number
+    page: number
+    search?: string
+    status?: AdminAccountStatus
+  }
+) {
+  const response = await requestApi<AdminProvider[]>({
+    path: '/admin/providers',
+    query: buildManagementQuery(params),
+    token,
+  })
+  return { data: response.data, meta: response.meta! }
+}
+
+export async function updateAdminProvider(
+  token: string,
+  providerId: number,
+  changes: { isFeatured?: boolean; status?: AdminAccountStatus }
+) {
+  return requestApi<{
+    id: number
+    isFeatured: boolean
+    status: AdminAccountStatus
+  }>({
+    body: changes,
+    method: 'PATCH',
+    path: `/admin/providers/${providerId}`,
     token,
   })
 }
