@@ -25,6 +25,7 @@ describe('analytics consent gating', () => {
   let storage: Record<string, string> = {}
 
   beforeEach(() => {
+    vi.stubEnv('VITE_PUBLIC_POSTHOG_KEY', 'phc_test')
     storage = {}
     const localStorageMock: Storage = {
       getItem: (key: string) => (key in storage ? storage[key] : null),
