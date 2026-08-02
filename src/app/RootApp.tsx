@@ -3,8 +3,9 @@ import type { RouterProviderProps } from 'react-router-dom'
 import { App } from './App'
 import {
   ANALYTICS_CONSENT_CHANGED_EVENT,
+  applyAnalyticsConsent,
   getAnalyticsConsentStatus,
-  initializeAnalytics,
+  trackSessionStart,
 } from '../lib/analytics'
 
 type RootAppProps = {
@@ -32,8 +33,10 @@ export function RootApp({ posthogKey, router }: RootAppProps) {
   }, [])
 
   useEffect(() => {
-    if (posthogKey && consentStatus === 'accepted') {
-      void initializeAnalytics(posthogKey)
+    if (posthogKey && consentStatus) {
+      void applyAnalyticsConsent(posthogKey, consentStatus).then(() => {
+        if (consentStatus === 'accepted') trackSessionStart()
+      })
     }
   }, [consentStatus, posthogKey])
 
