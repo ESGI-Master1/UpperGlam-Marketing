@@ -9,6 +9,8 @@ vi.mock('posthog-js', () => ({
     __loaded: true,
     capture: captureMock,
     init: vi.fn(),
+    opt_in_capturing: vi.fn(),
+    opt_out_capturing: vi.fn(),
   },
 }))
 
@@ -18,6 +20,7 @@ import {
   setAnalyticsConsentStatus,
   trackEvent,
   trackPageView,
+  trackSessionStart,
   posthogOptions,
 } from './analytics'
 
@@ -171,6 +174,20 @@ describe('analytics consent gating', () => {
         traffic_source: 'tiktok',
         utm_source: 'tiktok',
       })
+    )
+  })
+
+  it('tracks one session start and marks later sessions as returning', async () => {
+    setAnalyticsConsentStatus('accepted')
+
+    expect(trackSessionStart()).toBe(true)
+    expect(trackSessionStart()).toBe(false)
+
+    await vi.waitFor(() =>
+      expect(captureMock).toHaveBeenCalledWith(
+        'session_start',
+        expect.objectContaining({ is_returning_visitor: false })
+      )
     )
   })
 })

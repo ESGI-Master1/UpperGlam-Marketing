@@ -129,6 +129,7 @@ export function Home() {
             </p>
             <div className="app-flow-preview">
               <LazyVideo
+                analyticsId="customer_booking_demo"
                 ariaLabel="Démonstration animée du parcours de réservation Upper Glam"
                 height={1067}
                 poster="/media/app/welcome-final.png"

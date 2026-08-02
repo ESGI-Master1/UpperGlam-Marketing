@@ -23,6 +23,9 @@ export const ANALYTICS_CONSENT_STORAGE_KEY = 'ug_cookie_consent'
 export const ANALYTICS_CONSENT_CHANGED_EVENT = 'ug-cookie-consent-changed'
 export const COOKIE_PREFERENCES_OPEN_EVENT = 'ug-cookie-preferences-open'
 const ANALYTICS_ATTRIBUTION_STORAGE_KEY = 'ug_marketing_attribution'
+const ANALYTICS_FIRST_VISIT_STORAGE_KEY = 'ug_first_analytics_visit'
+const ANALYTICS_PREVIOUS_PATH_STORAGE_KEY = 'ug_previous_path'
+const ANALYTICS_SESSION_STARTED_STORAGE_KEY = 'ug_analytics_session_started'
 const UTM_KEYS = [
   'utm_source',
   'utm_medium',
@@ -67,8 +70,14 @@ export type AnalyticsEventName =
   | 'legal_link_click'
   | 'nav_click'
   | 'outbound_click'
+  | 'media_impression'
+  | 'page_engaged'
   | 'page_view'
   | 'pre_signup_role_selected'
+  | 'scroll_depth'
+  | 'session_start'
+  | 'video_play'
+  | 'video_progress'
 
 export function getAnalyticsConsentStatus(): AnalyticsConsentStatus | null {
   if (typeof window === 'undefined') return null
@@ -123,6 +132,58 @@ function writeStoredAttribution(properties: AnalyticsProperties) {
   }
 }
 
+export async function applyAnalyticsConsent(
+  apiKey: string,
+  status: AnalyticsConsentStatus
+) {
+  if (status === 'accepted') {
+    const posthog = await initializeAnalytics(apiKey)
+    posthog.opt_in_capturing()
+    return
+  }
+
+  if (posthogPromise) {
+    const posthog = await posthogPromise
+    posthog.opt_out_capturing()
+  }
+}
+
+function getHostname(value: string) {
+  if (!value) return ''
+
+  try {
+    return new URL(value).hostname.replace(/^www\./, '')
+  } catch {
+    return ''
+  }
+}
+
+function getTrafficChannel(
+  attribution: AnalyticsProperties,
+  referrerDomain: string
+) {
+  const medium = String(attribution.utm_medium ?? '').toLowerCase()
+  if (/(cpc|ppc|paid|display|affiliate)/.test(medium)) return 'paid'
+  if (/email|newsletter/.test(medium)) return 'email'
+
+  if (attribution.utm_source) return 'campaign'
+  if (!referrerDomain || referrerDomain === window.location.hostname) {
+    return 'direct'
+  }
+  if (/(google|bing|yahoo|duckduckgo|ecosia|qwant)\./.test(referrerDomain)) {
+    return 'organic_search'
+  }
+  if (
+    /(instagram|facebook|tiktok|linkedin|pinterest|snapchat|x\.com|t\.co)/.test(
+      referrerDomain
+    )
+  ) {
+    return 'organic_social'
+  }
+
+  return 'referral'
+}
+
 export function getAnalyticsContextProperties(): AnalyticsProperties {
   if (typeof window === 'undefined') return {}
 
@@ -135,13 +196,16 @@ export function getAnalyticsContextProperties(): AnalyticsProperties {
     return acc
   }, {})
   const hasFreshUtm = Object.keys(urlAttribution).length > 0
+  const initialReferrer = String(
+    storedAttribution.initial_referrer ?? document.referrer ?? ''
+  )
+  const referrerDomain = getHostname(initialReferrer)
   const attribution: AnalyticsProperties = {
     ...storedAttribution,
     ...urlAttribution,
     entry_path: storedAttribution.entry_path ?? url.pathname,
     entry_search: storedAttribution.entry_search ?? url.search,
-    initial_referrer:
-      storedAttribution.initial_referrer ?? document.referrer ?? '',
+    initial_referrer: initialReferrer,
   }
 
   if (hasFreshUtm || !storedAttribution.entry_path) {
@@ -153,8 +217,16 @@ export function getAnalyticsContextProperties(): AnalyticsProperties {
     current_path: url.pathname,
     current_search: url.search,
     current_url: url.href,
+    browser_language: navigator.language,
+    referrer_domain: referrerDomain,
     referrer: document.referrer ?? '',
-    traffic_source: attribution.utm_source ?? 'direct',
+    screen_height: window.screen.height,
+    screen_width: window.screen.width,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    traffic_channel: getTrafficChannel(attribution, referrerDomain),
+    traffic_source: attribution.utm_source || referrerDomain || 'direct',
+    viewport_height: window.innerHeight,
+    viewport_width: window.innerWidth,
   }
 }
 
@@ -162,7 +234,7 @@ export function trackEvent(
   event: AnalyticsEventName,
   properties?: AnalyticsProperties
 ) {
-  if (!hasAnalyticsConsent()) return
+  if (!hasAnalyticsConsent()) return false
 
   void getPostHog().then((posthog) => {
     posthog?.capture(event, {
@@ -170,18 +242,48 @@ export function trackEvent(
       ...properties,
     })
   })
+
+  return true
 }
 
 export function trackPageView(properties: AnalyticsProperties) {
   if (!hasAnalyticsConsent()) return
 
+  const previousPath = window.sessionStorage.getItem(
+    ANALYTICS_PREVIOUS_PATH_STORAGE_KEY
+  )
   const pageViewProperties = {
     ...getAnalyticsContextProperties(),
+    previous_path: previousPath ?? '',
     ...properties,
   }
+
+  window.sessionStorage.setItem(
+    ANALYTICS_PREVIOUS_PATH_STORAGE_KEY,
+    window.location.pathname
+  )
 
   void getPostHog().then((posthog) => {
     posthog?.capture('$pageview', pageViewProperties)
     posthog?.capture('page_view', pageViewProperties)
+  })
+}
+
+export function trackSessionStart() {
+  if (!hasAnalyticsConsent()) return false
+  if (
+    window.sessionStorage.getItem(ANALYTICS_SESSION_STARTED_STORAGE_KEY) ===
+    'true'
+  ) {
+    return false
+  }
+
+  const isReturningVisitor =
+    window.localStorage.getItem(ANALYTICS_FIRST_VISIT_STORAGE_KEY) === 'true'
+  window.localStorage.setItem(ANALYTICS_FIRST_VISIT_STORAGE_KEY, 'true')
+  window.sessionStorage.setItem(ANALYTICS_SESSION_STARTED_STORAGE_KEY, 'true')
+
+  return trackEvent('session_start', {
+    is_returning_visitor: isReturningVisitor,
   })
 }

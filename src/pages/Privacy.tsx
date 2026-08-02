@@ -149,6 +149,15 @@ export function PrivacyPage() {
               ne l'acceptez pas. Votre choix peut être modifié via « Gérer mes
               cookies » dans le pied de page.
             </p>
+            <p>
+              Lorsque vous l'acceptez, Upper Glam utilise PostHog pour mesurer
+              les visites et les parcours : pages consultées, source de trafic,
+              campagne, référent, navigateur, type d'appareil, dimensions
+              d'écran et interactions avec les contenus. Le contenu des champs
+              de formulaire, les mots de passe et les données saisies ne sont
+              pas transmis à cet outil. Les enregistrements de session sont
+              désactivés.
+            </p>
 
             <h2 className="text-xl text-[var(--ug-text)]">9. Sécurité</h2>
             <p>
